@@ -1,0 +1,1 @@
+<?php echo $logged_user->render_form($fields); ?>

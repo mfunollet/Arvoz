@@ -1,0 +1,71 @@
+/* 
+    Document   : layout
+    Created on : 25/11/2011, 17:09:55
+    Author     : ahmulek
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+root { 
+    display: block;
+}
+
+.uiInfoTable {
+    border: 0 none;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.uiInfoTable .label, .uiInfoTable .data, .uiInfoTable .rightCol {
+    padding: 3px 0 1px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.uiInfoTable .label {
+    color: #666666;
+    font-weight: bold;
+    padding-right: 10px;
+    text-align: right;
+    width: 130px;
+}
+
+.uiInfoTable .dataRow .label {
+    padding-top: 8px;
+	vertical-align: middle;
+}
+
+
+td, td.label {
+    font-size: 11px;
+    text-align: left;
+}
+
+.uiInfoTable .dataRow .data, .uiInfoTable .dataRow .rightCol {
+    padding-top: 5px;
+    vertical-align: middle;
+}
+
+.uiInfoTable .rightCol {
+    padding: 0 0 0 20px;
+    width: 225px;
+}
+
+.uiInfoTable .spacer td {
+    padding: 5px 0;
+}
+
+.sidebar li {
+    list-style: none;
+    margin-left: 0;
+}
+
+.sidebar li.current {
+    background: #e2e2e2;
+}
+
+.sidebar li:hover {
+    background: #aaaaaa;
+}

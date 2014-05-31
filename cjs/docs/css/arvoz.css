@@ -1,0 +1,35 @@
+body {
+    padding-top: 20px;
+    position:relative;
+}
+
+.header
+{
+    background-color:#e1e1e1;
+    height:150px;
+    margin-bottom:10px;
+}
+
+.content
+{
+    
+}
+
+.footer
+{
+    background-color:#e1e1e1;
+    height:100px;
+    margin-top:10px;
+}
+
+#process_table td.icon
+{
+    width:63px;
+}
+
+a.disabled {
+  color: #999999;
+  background-color: transparent;
+  cursor: default;
+}
+
