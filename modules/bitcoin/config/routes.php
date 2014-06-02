@@ -40,7 +40,7 @@ if (!defined('BASEPATH'))
   | in the URL cannot be matched to a valid route.
   |
  */
-$route['default_controller'] = "site"; // Aqui é o único local onde temos que escrever o nome do modulo
+$route['default_controller'] = "bitcoin"; // Aqui é o único local onde temos que escrever o nome do modulo
 $route['404_override'] = '';
 
 // FIX: Assim renomeamos o modulo pcr na URL
