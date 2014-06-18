@@ -47,10 +47,10 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'cpmy0022.servidorwebfacil.com';
-$db['default']['username'] = 'tgroch_alface';
-$db['default']['password'] = 'LIMELAM1';
-$db['default']['database'] = 'tgroch_dt';
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'powerdti_powerdt';
+$db['default']['password'] = 'Htub1z179U';
+$db['default']['database'] = 'powerdti_powerdt';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = FALSE;

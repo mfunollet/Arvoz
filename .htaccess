@@ -71,8 +71,8 @@ DirectoryIndex index.php
 
   # Respectivamente sem subdiretorios, subdiretorios do desenvolvimento
   # Obs.: O ultimo prevalece
-  RewriteBase /
-  #RewriteBase /arvoz
+  #RewriteBase /
+  RewriteBase /powerdt.in
   #RewriteBase /subdiretorio/web
 
 

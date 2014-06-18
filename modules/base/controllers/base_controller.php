@@ -162,8 +162,8 @@ class Base_Controller extends CI_Controller {
     }
 
     function _set_title($title, $screen_title = NULL) {
-        $this->data['header']->title = $title;
-        $this->data['header']->screen_title = $screen_title;
+        //$this->data['header']->title = $title;
+        //$this->data['header']->screen_title = $screen_title;
     }
 
     function _load_use_as_institutions() {

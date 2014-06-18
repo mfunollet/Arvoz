@@ -5,9 +5,9 @@
 	"default": {
 
 		"host": "ftp.7fotos.com.br",
-		"username": "tgroch@alface.co.cc",  // or null for anonymous login
-		"password": "LIMELAM1",
-		"path": "/public_html/powerdt/",
+		"username": "powerdti",  // or null for anonymous login
+		"password": "Htub1z179U",
+		"path": "/public_html/powerdt.in/",
 
 		"upload_on_save": true // set *false* if you do not want to upload on save!
 

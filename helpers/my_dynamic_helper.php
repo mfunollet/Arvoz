@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Function to print the reference of the script url in the view
  *
