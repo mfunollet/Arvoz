@@ -32,11 +32,38 @@ class Bomnegocio {
 
     public function read_product($url = '') {
         $data[0]['url'] = 'http://rj.bomnegocio.com/rio-de-janeiro-e-regiao/audio-tv-video-e-fotografia/docking-station-sony-rdp-m7ip-iphone-4-4s-ipod-36314008';
+        $data[0]['url'] = 'http://rj.bomnegocio.com/rio-de-janeiro-e-regiao/celulares/tela-de-iphone-5-preto-trocada-na-hora-centro-35374842';
         $data[0]['opcoes']['CURLOPT_REFERER'] = 'http://google.com/';
         $html = $this->CI->curl->get($data);
         $this->html = str_get_html($html);
 
-        echo $this->html->find('.description',0)->plaintext;
+        $description    = $this->html->find('.description',0)->plaintext;
+        $price          = $this->html->find('.field_price span',0)->plaintext;
+        
+        $date           = $this->html->find('div[class=adBN_header mb10px] p.text',0)->plaintext;
+        $date           = trim(str_replace('Inserido em: ', '', $date));
+        $date           = substr($date, 0, -1);
+        
+        $seller         = $this->html->find('li[class=item owner] p.text',0)->plaintext;
+        $seller_phone   = 'http://bomnegocio.com/'.trim($this->html->find('img.number',0)->src);
+        
+        $code           = $this->html->find('ul[class=list list_id last] p.description',0)->plaintext;
+
+        // Details from product
+        foreach($this->html->find('div[class=ad_details_section] li.item') as $item) {
+            $term = $item->find('.term',0)->plaintext;
+            $term = substr($term, 0, -1);
+            $info[$term] = trim($item->find('.description',0)->plaintext);
+        }
+
+        // Location
+        foreach($this->html->find('ul[class=list location] li') as $item) {
+            $term = $item->find('.term',0)->plaintext;
+            $term = substr($term, 0, -1);
+            $info[$term] = trim($item->find('.description',0)->plaintext);
+        }
+
+        
     }
     
     private function get_page_links() {
