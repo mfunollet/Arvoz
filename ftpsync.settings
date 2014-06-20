@@ -24,7 +24,7 @@
 		// "always_sync_local_permissions": true,
 
 		// Value "auto" = use UTF-8 if availible (FEAT: UTF8), otherwise use local
-		// "encoding": "auto",
+		// "encoding": "UTF-8",
 
 		// Trade small performance impact for more stable and secure transfer (old file is intact until the download is finished)
 		// "use_tempfile": true,
