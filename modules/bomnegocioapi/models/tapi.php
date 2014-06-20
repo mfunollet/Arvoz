@@ -1,8 +1,8 @@
 <?php
 
-class Tapi extends DataMapperExt {
+class ProductBomNegocio extends DataMapperExt {
 
-    var $table = 'tapis';
+    var $table = 'products_bomnegocio';
     
     function __construct($id = NULL) {
         //register_shutdown_function(array(&$this, 'MyDestructor'));
