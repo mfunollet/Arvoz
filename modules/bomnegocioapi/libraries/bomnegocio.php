@@ -33,12 +33,17 @@ class Bomnegocio {
     public function read_product($url = '') {
         $data[0]['url'] = 'http://rj.bomnegocio.com/rio-de-janeiro-e-regiao/audio-tv-video-e-fotografia/docking-station-sony-rdp-m7ip-iphone-4-4s-ipod-36314008';
         $data[0]['url'] = 'http://rj.bomnegocio.com/rio-de-janeiro-e-regiao/celulares/tela-de-iphone-5-preto-trocada-na-hora-centro-35374842';
+        //$data[0]['url'] = 'http://df.bomnegocio.com/distrito-federal-e-regiao/celulares/bateria-iphone-4-bateria-iphone-4s-129-99-instal-37765807';
         $data[0]['opcoes']['CURLOPT_REFERER'] = 'http://google.com/';
         $html = $this->CI->curl->get($data);
         $this->html = str_get_html($html);
 
+        $title          = $this->html->find('#ad_title',0)->innertext;
+        $title          = trim(substr(0,strpos($title, '<span class="price highlight">')));
+        echo $title;
         $description    = $this->html->find('.description',0)->plaintext;
-        $price          = $this->html->find('.field_price span',0)->plaintext;
+        $price          = $this->html->find('.field_price span',0);
+        $price          = (is_null($price)) ? 0 :  $price->plaintext;
         
         $date           = $this->html->find('div[class=adBN_header mb10px] p.text',0)->plaintext;
         $date           = trim(str_replace('Inserido em: ', '', $date));
