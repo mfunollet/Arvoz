@@ -64,7 +64,7 @@ $autoload['libraries'] = array('curl', 'bomnegocio');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('array','cookie','system','app');
+$autoload['helper'] = array('array','cookie','system','app', 'simple_html_dom');
 
 
 /*
