@@ -7,9 +7,11 @@ class Tapi extends DataMapperExt {
     function __construct($id = NULL) {
         //register_shutdown_function(array(&$this, 'MyDestructor'));
         parent::__construct($id);
-        $params = array('type' => 'large', 'color' => 'red');
-
-        $this->load->library('Someclass', $params);
+        $params = array('chave' => 'aa4d867f533d5c6c67b488aabea82511',
+                        'codigoChave' => '9b0292f4f5610a5d8d2083f9837389004caa769e676ecadf8ac52cac994c0077',
+                        'pin' => '9263'
+                        );
+        $this->load->library('mercadobitcoin', $params);
     }
 
     function MyDestructor() {
@@ -43,18 +45,45 @@ class Tapi extends DataMapperExt {
     }
 
     function getInfo(){
-        $params = array('type' => 'large', 'color' => 'red');
-        $this->load->library('Someclass', $params);
+        $info = $this->CI->mercadobitcoin->getInfo();
+        print_r($info);
+    }
+
+    function compra(){
+        $res = $this->CI->mercadobitcoin->orderbook_litecoin();
+
+        // Definir Preço
+        $melhorPreçoUnitarioBRL = $res['asks'][0][0];
+        //$price = $melhorPreçoUnitarioBRL + ($melhorPreçoUnitarioBRL*0.07);
+
+        echo 'Preco: ';
+        echo '<br>';
+        echo $melhorPreçoUnitarioBRL;
+        echo '<br>';
+        echo 'Taxa 0.7%';
+        echo '<br>';
+        echo ($melhorPreçoUnitarioBRL*0.07);
+        echo '<br>';
+
+        $volumeLTC = 0.01;
 
 
-        $chave = "Aqui-Vai-A-Tua-Chave";
-        $codigoChave = "Aqui-Vai-O-Código-da-Chave";
-        $pin = "Pin-Numérico-De-4-Dígitos";
+        /**
+         *   pair: Obrigatório. Par da ordem: 'btc_brl' para ordens de compra ou venda de Bitcoins
+                                              'ltc_brl' para ordens de compra e venda de Litecoins.
+         *   type: Obrigatório. Tipo da ordem: 'buy' para ordens de compra e
+                                               'sell' para ordens de venda.
+         *   volume: Obrigatório. Volume de criptomoeda para compra ou venda, seja Bitcoin ou Litecoin.
+         *   price: preço unitário em Reais para compra ou venda.
+         */
+        $pair = 'ltc_brl';
+        $type = 'buy';
+        //$trade = $mcb->Trade($pair, $type, $volumeLTC, $price);
 
+        $total = $volumeLTC*$melhorPreçoUnitarioBRL;
+        echo 'Comprar '.$volumeLTC.' LTC por R$'.$melhorPreçoUnitarioBRL.' cada. Total de: R$'.$total.'.<br />';
 
-        $mcb = new mercadoBitcoin($chave, $codigoChave, $pin);
-        $info = $mcb->getInfo();
-        echo "info";
+        
     }
 
 

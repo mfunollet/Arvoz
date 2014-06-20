@@ -1,21 +1,27 @@
-<?php
-class mercadoBitcoin
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Mercadobitcoin
   {
     private static $nonce;
     private static $chave;
     private static $codigoChave;
     private static $pin;
-    private static $certificado;
+    private static $certificate;
     private static $apiPrivada;
     private static $apiPublica;
     private static $baseUrl;
 
-    public function __construct($chave, $codigoChave, $pin, $temTeuServidorCertificado = false)
+    public function __construct($params)
       {
+        $chave = (isset($params['chave'])) ? $params['chave'] : '';
+        $codigoChave = (isset($params['codigoChave'])) ? $params['codigoChave'] : '';
+        $pin = (isset($params['pin'])) ? $params['pin'] : '';
+        $temTeuServidorCertificado = (isset($params['temTeuServidorCertificado'])) ? $params['temTeuServidorCertificado'] : false;
+
         $this->chave = $chave;
         $this->pin = $pin;
         $this->codigoChave = $codigoChave;
-        $this->certificado = (bool)$temTeuServidorCertificado;
+        $this->certificate = (bool)$temTeuServidorCertificado;
         $this->baseUrl = "https://www.mercadobitcoin.com.br/";
         $this->version = "v. beta 0.2";
         $this->apiPrivada = Array("getInfo", "OrderList", "Trade", "CancelOrder");

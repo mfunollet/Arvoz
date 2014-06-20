@@ -150,7 +150,7 @@ DirectoryIndex index.php
   # If you have other applications that are non-CI integrated into your site,
   # Like a third-party forum or blog, then this will disable it.  Do not
   # use if you need to call third-party PHP files.
-  RewriteCond $1 !^(index\.php|public|inc|uploads|robots\.txt|favicon\.ico)
+  RewriteCond $1 !^(index\.php|public|inc|uploads|gmail|robots\.txt|favicon\.ico)
 
   # ADDITIONAL REWRITE CONDITION: This may be used in addition to one of the
   # above METHODs.

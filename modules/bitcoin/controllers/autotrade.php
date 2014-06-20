@@ -43,6 +43,11 @@ class Autotrade extends CI_Controller {
         $tapi->getInfo();
     }
 
+    function compra(){
+      $tapi = new Tapi();
+      $tapi->compra();
+    }
+
 }
 
 /* End of file site.php */
