@@ -16,7 +16,13 @@ class Api extends CI_Controller {
   }
 
   function search() {
-    $this->bomnegocio->read_product();
+    $p = new Productbomnegocio();
+    $p->craw_by_keywords(array('iphone'));
+  }
+
+  function crawproducts() {
+    $p = new Productbomnegocio();
+    $p->craw_products();
   }
 
   function ads(){
