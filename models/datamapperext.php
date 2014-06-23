@@ -19,31 +19,31 @@ class DataMapperExt extends DataMapper {
     }
 
     //FIX: NUNCA MAIS MEXE!
-//    function get_clean_fields() {
-//        if (empty($this->filtered_fields)) {
-//            $fields = $this->CI->db->list_fields($this->table);
-//            foreach ($fields as $k => $v) {
-//                //FIX: trocar create_time para $this->create_field do $conf do datamapper
-//                if ($v == 'id' || substr($v, -3) == '_id' || $v == 'create_time' || $v == 'update_time' || $v == 'status' || in_array($v, $this->removed_fields)) {
-//                    unset($fields[$k]);
-//                }
-//            }
-//
-//            $this->filtered_fields = $fields;
-//        }
-//
-//        // FIX: verificar se $this->filtered_fields é um array
-//        //se for array, descobre qual chave
-//        // Senão toma como $this->filtered_fields
-//
-//        foreach ($this->validation as $k => $v) {
-//            if (!in_array($k, $this->filtered_fields) && !isset($this->{$k})) {
-//                unset($this->validation[$k]['rules']);
-//            }
-//        }
-//
-//        return $this->filtered_fields;
-//    }
+   function get_clean_fields() {
+       if (empty($this->filtered_fields)) {
+           $fields = $this->CI->db->list_fields($this->table);
+           foreach ($fields as $k => $v) {
+               //FIX: trocar create_time para $this->create_field do $conf do datamapper
+               if ($v == 'id' || substr($v, -3) == '_id' || $v == 'create_time' || $v == 'update_time' || $v == 'status' || in_array($v, $this->removed_fields)) {
+                   unset($fields[$k]);
+               }
+           }
+
+           $this->filtered_fields = $fields;
+       }
+
+       // FIX: verificar se $this->filtered_fields é um array
+       //se for array, descobre qual chave
+       // Senão toma como $this->filtered_fields
+
+       foreach ($this->validation as $k => $v) {
+           if (!in_array($k, $this->filtered_fields) && !isset($this->{$k})) {
+               unset($this->validation[$k]['rules']);
+           }
+       }
+
+       return $this->filtered_fields;
+   }
 
     function fillObject($remove = array(), $post = NULL) {
         $post = (empty($post)) ? $this->CI->input->post() : $post;
