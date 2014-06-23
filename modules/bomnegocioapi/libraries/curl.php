@@ -109,7 +109,7 @@ class Curl {
         curl_setopt($curly, CURLOPT_URL, $data['url']);
         curl_setopt($curly, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.4) Gecko/20030624 Netscape/7.1 (ax)");
         curl_setopt($curly, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($curly, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($curly, CURLOPT_FOLLOWLOCATION, FALSE);
 
         if ($this->cookie_file_path) {
             curl_setopt($curly, CURLOPT_COOKIEFILE, $this->cookie_file_path);

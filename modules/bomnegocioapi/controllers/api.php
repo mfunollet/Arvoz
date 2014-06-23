@@ -9,15 +9,27 @@ class Api extends CI_Controller {
   }
 
   function index() {
+    echo anchor('crawlers', 'Crawlers');
+    echo '<br>';
     echo anchor('api/search', 'search');
+    echo '<br>';
+    echo anchor('api/crawproducts', 'crawproducts');
+    echo '<br>';
+    echo anchor('api/apiGetProducts', 'apiGetProducts');
     echo '<br>';
     echo anchor('api/ads', 'ads');
     echo '<br>';
+    echo anchor('api/view', 'view');
+    echo '<br>';
+  }
+
+  function teste(){
+    //$this->bomnegocio->read_product('http://df.bomnegocio.com/distrito-federal-e-regiao/celulares/bateria-iphone-4-bateria-iphone-4s-129-99-instal-37765807');
   }
 
   function search() {
     $p = new Productbomnegocio();
-    $p->craw_by_keywords(array('iphone'));
+    $p->auto_craw();
   }
 
   function crawproducts() {
@@ -25,8 +37,36 @@ class Api extends CI_Controller {
     $p->craw_products();
   }
 
+  function view() {
+      $date =  date('Y-m-d H:i:s O', time(strtotime('yesterday')));
+      $p = new Productbomnegocio();
+      $p->where('price >', 200);
+      $p->where('status', 0);
+      //$p->like('title', '64');
+      //$p->or_like('description', '64');
+      //$p->order_by('date', 'desc');
+      $p->order_by('price', 'asc');
+      //$p->where('date >', $date);
+      $p->get();
+      //$p->check_last_query();
+      $data['products'] = $p;
+      $this->load->view('view',$data);
+  }
+  function test(){
+    $this->bomnegocio->read_product('http://rs.bomnegocio.com/regioes-de-porto-alegre-torres-e-santa-cruz-do-sul/celulares/iphone-5-32gb-otimo-estado-completo-37918286');
+  }
+
   function ads(){
     $this->bomnegocio->refreshAds();
+  }
+
+  function apiGetProducts() {
+    $products = new Productbomnegocio();
+    $products->get();
+    header('Content-Type: application/json');
+    foreach($products as $p){
+      echo $p->to_json();
+    }
   }
 
 }

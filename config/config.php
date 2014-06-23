@@ -38,7 +38,7 @@ $config['view_style'] = TRUE;
 | path to your installation.
 |
 */
-$config['base_url']	= '';
+$config['base_url']	= 'http://powerdt.in/';
 
 /*
 |--------------------------------------------------------------------------

@@ -14,25 +14,23 @@ class ProductBomNegocio extends DataMapperExt {
         echo $this->email;
     }
 
-    function search() {
-        $this->bomnegocio->read_product();
+    public function auto_craw(){
+        $craws = new Crawler();
+        $craws->get();
+        foreach($craws as $c){
+            $keys[] = $c->keyword;
+        }
+        $this->craw_by_keywords($keys);
     }
 
     public function craw_products() {
         //$this->where('url != NULL');
         $this->get();
-        foreach ($this as $p) {
-            $product = $this->CI->bomnegocio->read_product($p->url);
-            if($product){
-                foreach($product as $field => $value){
-                    $p->{$field} = $value;
-                }
-                $p->save();
-            }else{
-                $p->delete();
-            }
+        if($this->count() > 0){
+            $this->CI->bomnegocio->read_product($this);
+        }else{
+            echo 'nenhum produto registrado';
         }
-
     }
 
     public function craw_by_keywords($keywords = array()) {
