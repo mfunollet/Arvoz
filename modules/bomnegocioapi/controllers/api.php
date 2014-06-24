@@ -53,7 +53,22 @@ class Api extends CI_Controller {
       $this->load->view('view',$data);
   }
   function test(){
-    $this->bomnegocio->read_product('http://rs.bomnegocio.com/regioes-de-porto-alegre-torres-e-santa-cruz-do-sul/celulares/iphone-5-32gb-otimo-estado-completo-37918286');
+    //$this->bomnegocio->read_product('http://rs.bomnegocio.com/regioes-de-porto-alegre-torres-e-santa-cruz-do-sul/celulares/iphone-5-32gb-otimo-estado-completo-37918286');
+    //CONTROLLER:
+    $this->load->library('Gmap');
+    $this->gmap->GoogleMapAPI();
+    $this->gmap->setMapType('hybrid');    
+    $this->gmap->width = '740px';    
+    //$this->gmap->addMarkerByAddress("42 Beanland Gardens, Wibsey, Bradford,UK","Marker Title", "Marker Description");
+    $this->gmap->getGeocode("Rua dos invalidos 138","Teste", "Teste Description");
+    $data['headerjs']  = $this->gmap->getHeaderJS();
+    $data['headermap'] = $this->gmap->getMapJS();
+    $data['onload']    = $this->gmap->printOnLoad();
+    $data['map']       = $this->gmap->printMap();
+    $data['sidebar']   = "";             
+
+    //view
+    $this->load->view('map',$data);
   }
 
   function ads(){
