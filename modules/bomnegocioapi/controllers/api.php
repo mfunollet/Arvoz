@@ -23,6 +23,14 @@ class Api extends CI_Controller {
     echo '<br>';
   }
 
+  function json(){
+    $p = new Productbomnegocio();
+    $p->get();
+    $p->set_json_content_type();
+    echo $p->all_to_json();
+    // http://stackoverflow.com/questions/15954174/code-igniter-with-data-mapper-giving-in-valid-json
+  }
+
   function teste(){
     //$this->bomnegocio->read_product('http://df.bomnegocio.com/distrito-federal-e-regiao/celulares/bateria-iphone-4-bateria-iphone-4s-129-99-instal-37765807');
   }
@@ -52,23 +60,24 @@ class Api extends CI_Controller {
       $data['products'] = $p;
       $this->load->view('view',$data);
   }
-  function test(){
+  
+  function map(){
     //$this->bomnegocio->read_product('http://rs.bomnegocio.com/regioes-de-porto-alegre-torres-e-santa-cruz-do-sul/celulares/iphone-5-32gb-otimo-estado-completo-37918286');
     //CONTROLLER:
-    $this->load->library('Gmap');
-    $this->gmap->GoogleMapAPI();
-    $this->gmap->setMapType('hybrid');    
-    $this->gmap->width = '740px';    
-    //$this->gmap->addMarkerByAddress("42 Beanland Gardens, Wibsey, Bradford,UK","Marker Title", "Marker Description");
-    $this->gmap->getGeocode("Rua dos invalidos 138","Teste", "Teste Description");
-    $data['headerjs']  = $this->gmap->getHeaderJS();
-    $data['headermap'] = $this->gmap->getMapJS();
-    $data['onload']    = $this->gmap->printOnLoad();
-    $data['map']       = $this->gmap->printMap();
-    $data['sidebar']   = "";             
+    // $this->load->library('Gmap');
+    // $this->gmap->GoogleMapAPI();
+    // $this->gmap->setMapType('hybrid');    
+    // $this->gmap->width = '740px';    
+    // //$this->gmap->addMarkerByAddress("42 Beanland Gardens, Wibsey, Bradford,UK","Marker Title", "Marker Description");
+    // $this->gmap->getGeocode("Rua dos invalidos, 138","Teste", "Teste Description");
+    // $data['headerjs']  = $this->gmap->getHeaderJS();
+    // $data['headermap'] = $this->gmap->getMapJS();
+    // $data['onload']    = $this->gmap->printOnLoad();
+    // $data['map']       = $this->gmap->printMap();
+    // $data['sidebar']   = "";             
 
     //view
-    $this->load->view('map',$data);
+    $this->load->view('map'/*,$data*/);
   }
 
   function ads(){
