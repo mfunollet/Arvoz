@@ -9,6 +9,7 @@
 <script type="text/javascript">
 	var map;
    function loadResults (data) {
+   	 var markers_data = [];
   //  	alert(data.items.length);
 		//	alert(i+': '+item.title);
       //alert(JSON.stringify(data));
@@ -27,43 +28,78 @@
         //       icon = item.categories[0].icon;
         //     }
 
-			GMaps.geocode({
-			  address: item.zip_code+' - '+item.district+' - '+item.city,
-			  callback: function(results, status) {
-			    if (status == 'OK') {
-			    	//alert(item.title)
-			      var latlng = results[0].geometry.location;
+	  //       addr = '';
+	  //       if(item.zip_code != ''){
+	  //       	addr = item.zip_code+' - ';
+			// }
+			// if(item.district != ''){
+	  //       	addr = addr+item.district+' - ';
+			// }
+			// if(item.city != ''){
+	  //       	addr = addr+item.city;
+			// }
+			
+			// GMaps.geocode({
+			//   address: addr,
+			//   callback: function(results, status) {
+			//     if (status == 'OK') {
+			//     	//alert(item.title)
+			//       var latlng = results[0].geometry.location;
 
 					
-					map.addMarker({
-					  lat : latlng.lat(),
-					  lng : latlng.lng(),
-					  title : item.title,
-					  infoWindow: {
-					    content: '<p>'+item.description+'</p>'
-					  }
-					  /*icon : {
-					    size : new google.maps.Size(32, 32),
-					    url : icon
-					  }*/
-					});
-			    	//alert(JSON.stringify(markers_data));
+			// 		//map.addMarker({
+			// 		markers_data.push({
+			// 		  lat : latlng.lat(),
+			// 		  lng : latlng.lng(),
+			// 		  title : item.title,
+			// 		  infoWindow: {
+			// 		    content: '<p>'+
+			// 		    			'<h1>'+item.title+'</h1>'+
+			// 		    			'<img src="'+item.image+'" class="image" />'+
+			// 		    			item.description+
+			// 		    		'</p>'
+			// 		  }/*,
+			// 		  icon : {
+			// 		    size : new google.maps.Size(32, 32),
+			// 		    url : item.image
+			// 		  }*/
+			// 		});
+			//     	//alert(JSON.stringify(markers_data));
 
-					// markers_data.lat = latlng.lat()
-					// markers_data.lng = latlng.lng()
-					// markers_data.title = item.title
+			// 		// markers_data.lat = latlng.lat()
+			// 		// markers_data.lng = latlng.lng()
+			// 		// markers_data.title = item.title
 
 
-			      map.setCenter(latlng.lat(), latlng.lng());
-			      // map.addMarker({
-			      //   lat: latlng.lat(),
-			      //   lng: latlng.lng()
-			      // });
-			    }
-			  }
+			//       //map.setCenter(latlng.lat(), latlng.lng());
+			//       // map.addMarker({
+			//       //   lat: latlng.lat(),
+			//       //   lng: latlng.lng()
+			//       // });
+			//     }
+			//   }
+			// });
+
+
+			markers_data.push({
+			  lat : item.lat,
+			  lng : item.lon,
+			  title : item.title,
+			  infoWindow: {
+			    content: '<p>'+
+			    			'<h1>'+item.title+'</h1>'+
+			    			'<img src="'+item.image+'" class="image" />'+
+			    			item.description+
+			    		'</p>'
+			  }/*,
+			  icon : {
+			    size : new google.maps.Size(32, 32),
+			    url : item.image
+			  }*/
 			});
+
 	        //   }
-    	
+    	map.addMarkers(markers_data);
 		});
       //   }
       // }
@@ -122,6 +158,10 @@ $(document).ready(function(){
 #panorama {
   height:100%;
   background:#6699cc;
+}
+.image{
+	width: 200px;
+	height: 200px;
 }
 </style>
 </head>

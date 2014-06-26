@@ -21,12 +21,19 @@ class Api extends CI_Controller {
     echo '<br>';
     echo anchor('api/view', 'view');
     echo '<br>';
+    echo anchor('api/map', 'map');
+    echo '<br>';
   }
 
   function json(){
     $p = new Productbomnegocio();
+    $p->where('lat !=', 0);
+    $p->where('lon !=', 0);
     $p->get();
-    $p->set_json_content_type();
+    //$p->check_last_query();exit;
+    //$p->set_json_content_type();
+
+    header('Content-Type: application/json');
     echo $p->all_to_json();
     // http://stackoverflow.com/questions/15954174/code-igniter-with-data-mapper-giving-in-valid-json
   }
@@ -60,12 +67,12 @@ class Api extends CI_Controller {
       $data['products'] = $p;
       $this->load->view('view',$data);
   }
-  
+
   function map(){
     //$this->bomnegocio->read_product('http://rs.bomnegocio.com/regioes-de-porto-alegre-torres-e-santa-cruz-do-sul/celulares/iphone-5-32gb-otimo-estado-completo-37918286');
     //CONTROLLER:
-    // $this->load->library('Gmap');
-    // $this->gmap->GoogleMapAPI();
+     // $this->load->library('Gmap');
+     // $this->gmap->GoogleMapAPI();
     // $this->gmap->setMapType('hybrid');    
     // $this->gmap->width = '740px';    
     // //$this->gmap->addMarkerByAddress("42 Beanland Gardens, Wibsey, Bradford,UK","Marker Title", "Marker Description");

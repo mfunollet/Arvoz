@@ -2365,7 +2365,7 @@ class Gmap {
         //if(($_geocode = $this->getCache($address)) === false) {
         	//if(($_geocode = $this->geoGetCoords($address)) !== false) {
         $_geocode = $this->geoGetCoords($address);
-        var_dump($_geocode);
+        //var_dump($_geocode);
             	//$this->putCache($address, $_geocode['lon'], $_geocode['lat']);
             //}
         //}
