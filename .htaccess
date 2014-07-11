@@ -72,7 +72,7 @@ DirectoryIndex index.php
   # Respectivamente sem subdiretorios, subdiretorios do desenvolvimento
   # Obs.: O ultimo prevalece
   #RewriteBase /
-  RewriteBase /powerdt.in
+  RewriteBase /
   #RewriteBase /subdiretorio/web
 
 

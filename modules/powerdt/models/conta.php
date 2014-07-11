@@ -66,7 +66,7 @@ class Conta extends DataMapperExt {
         $data[0]['cookie'] = $this->get_cookie_name();
 
         $html = $this->CI->curl->get($data);
-echo $html;
+
         // Verifica se fez login
         if (strpos($html, 'Reload the page') || strpos($html, 'Dark Throne Overview')) {
             $this->last_login = date($this->timestamp_format);

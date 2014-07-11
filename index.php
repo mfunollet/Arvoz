@@ -56,7 +56,6 @@ if (defined('ENVIRONMENT'))
  * as this file.
  *
  */
-
 	if (PHP_OS == "WINNT")
 	{
 		$full_server_path = "C:/wamp/www/";
@@ -66,7 +65,9 @@ if (defined('ENVIRONMENT'))
 	}
 	else if (PHP_OS == "Linux")
 	{
-		$full_server_path = realpath('../').'/';
+		//$full_server_path = "/var/www/";
+		$full_server_path = (pathinfo(realpath('./'))['basename'] == 'public_html') ? realpath('../') : realpath('../../');
+		$full_server_path .= '/';
 	}
 	else
 	{
@@ -89,9 +90,9 @@ if (defined('ENVIRONMENT'))
  * NO TRAILING SLASH!
  *
  */
-	define('APPNAME', 'arvoz');
-	$application_folder = $full_server_path.APPNAME;
-	$application_folder = realpath('.');
+
+	define('APPNAME', 'powerdt');
+	$application_folder = realpath('./');
 
 /*
  * --------------------------------------------------------------------
