@@ -25,6 +25,7 @@ class ProductBomNegocio extends DataMapperExt {
 
     public function craw_products() {
         //$this->where('url != NULL');
+        // update_time < 10 min
         $this->get();
         if($this->count() > 0){
             $this->CI->bomnegocio->read_product($this);

@@ -186,6 +186,14 @@ class Bomnegocio {
             $product['seller_phone'] = $seller_phone;
             $product['code']        = $code;
 
+            // Lon Lat
+            $this->CI->load->library('Gmap');
+            $this->CI->gmap->GoogleMapAPI();
+            $loc = $this->CI->gmap->getGeocode($product['zip_code'].' - '. $product['district'].' - '. $product['city']);
+            $product['lat'] = $loc['lat'];
+            $product['lon'] = $loc['lon'];
+
+
             // Save product
             $p = new ProductBomNegocio();
             $p->where('url', $data[$k]['url']);
