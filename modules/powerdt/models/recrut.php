@@ -15,6 +15,9 @@ class Recrut extends DataMapperExt {
     function is_recrute_done($logged_dt, $check_online = FALSE, $cod = '') {
         if ($check_online) {
             $html = $logged_dt->execute_recrute($cod);
+            exit;
+            var_dump((strpos($html, 'You have reached the maximum amount of credits from the recruiter for today.')));
+            exit;
             if (strpos($html, 'You have reached the maximum amount of credits from the recruiter for today.')) {
                 return TRUE;
             }

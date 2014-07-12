@@ -48,9 +48,18 @@ class Bomnegocio {
         //return array_merge($links, $this->search($q, $next_link));
     }
 
+<<<<<<< HEAD
     public function read_product($products = '') {
         if( is_string($products) ){
             $products = array($products);
+=======
+    public function read_product($_products = '') {
+        if( is_string($_products) ){
+            $products[0] = new stdClass();
+            $products[0]->url = $_products;
+        }else{
+            $products = $_products;
+>>>>>>> origin/master
         }
         /*$data[0]['url'] = 'http://rj.bomnegocio.com/rio-de-janeiro-e-regiao/audio-tv-video-e-fotografia/docking-station-sony-rdp-m7ip-iphone-4-4s-ipod-36314008';
         $data[0]['url'] = 'http://rj.bomnegocio.com/rio-de-janeiro-e-regiao/celulares/tela-de-iphone-5-preto-trocada-na-hora-centro-35374842';
@@ -58,6 +67,7 @@ class Bomnegocio {
         foreach($products as $k => $p){
             $data[$k]['url'] = $p->url;
             $data[$k]['opcoes']['CURLOPT_REFERER'] = 'http://google.com/';
+<<<<<<< HEAD
         }
         $htmls = $this->CI->curl->get($data);
 
@@ -67,16 +77,64 @@ class Bomnegocio {
 
             // Product was removed?
 
+=======
+            //$data[$k]['opcoes']['CURLOPT_FOLLOWLOCATION'] = FALSE;
+        }
+        $htmls = $this->CI->curl->get($data);
+
+        if(!is_array($htmls)){
+            $htmls = array($htmls);
+        }
+
+        foreach ($htmls as $k => $html) {
+            if(empty($html)){
+                // se encontrar a mensagem "O anúncio não foi encontrado. Possíveis razões:" troca para vendido e pula
+                $p = new ProductBomNegocio();
+                $p->where('url', $data[$k]['url']);
+                $p->get();
+                if($p->exists()){
+                    $p->status = 1;
+                    $p->save();
+                }
+                continue;
+            }
+            $html = utf8_encode($html);
+            $this->html = str_get_html($html);
+            // echo $data[$k]['url'];
+            // echo '<br>';
+            // var_dump(is_null($this->html->find('.vi_adBN_not_found_section',0)));
+            // echo "<textarea>";
+            // echo $html;
+            // echo "</textarea>";
+            // // Product was removed?
+            // if( ! is_null($this->html->find('h4.msg')) ){
+            // }
+>>>>>>> origin/master
 
 
             $image          = $this->html->find('img.image',0);
             $image          = (!is_null($image)) ? $image->src : '';
             
 
+<<<<<<< HEAD
             $title          = $this->html->find('#ad_title',0)->innertext;
             $title          = utf8_decode(trim(substr($title,0,strpos($title, '<span class="price highlight">')-3)));
 
             $description    = trim($this->html->find('.description',0)->plaintext);
+=======
+            $title          = $this->html->find('#ad_title',0);
+            if(!is_null($title)){
+                $title          = $title->innertext;
+                $title          = utf8_decode(trim(substr($title,0,strpos($title, '<span class="price highlight">')-3)));
+            }else{
+                echo 'problema com: ';
+                echo $data[$k]['url'];
+            }
+
+            $description    = $this->html->find('.description',0);
+            $description    = (!is_null($description)) ? trim($description->plaintext):'';
+
+>>>>>>> origin/master
             $price          = $this->html->find('.field_price span',0);
             $price          = (is_null($price)) ? 0 :  substr($price->plaintext,2);
             
