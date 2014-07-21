@@ -6,7 +6,7 @@
 
 		"host": "powerdt.in",
 		"username": "powerdt",  // or null for anonymous login
-		"password": "Yo9CoEVGM2F6",
+		"password": "P88M33NrZ6Rb",
 		"path": "/public_html",
 
 		"upload_on_save": true // set *false* if you do not want to upload on save!

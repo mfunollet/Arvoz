@@ -181,7 +181,7 @@ class Conta extends DataMapperExt {
 
     function recrutarNoSync($quantidade_loops = 1) {
         for ($i = 1; $i <= $quantidade_loops; $i++) {
-            $this->save_log('[' . $this->id . '] [Inico] RecruteNoSync ' . $i . ' / ' . $quantidade_loops);
+            log_message('info', '[' . $this->id . '] [Inico] RecruteNoSync ' . $i . ' / ' . $quantidade_loops);
             $this->CI->curl->get_async(site_url('site/recrutar/' . $this->id));
         }
         $this->CI->curl->get_async(site_url('site/recrutarNoSync/' . $quantidade_loops));
@@ -196,12 +196,6 @@ class Conta extends DataMapperExt {
         return $this->CI->curl->get($data);
     }
 
-    function save_log($texto = '') {
-        $l = new Log();
-        $l->texto = $texto;
-        $l->save();
-    }
-
     function save_recrut_clicks($clicks) {
         $r = new Recrut();
         $r->where('create_time > ', date('Y-m-d 00:00:00', time()));
@@ -214,7 +208,7 @@ class Conta extends DataMapperExt {
             $re->clicked = $clicks;
             $re->save($this);
         } else {
-            $this->save_log('[' . $this->id . '] [AVISO] Recrute ja executado hoje clicks !' . $r->clicked . '!=' . $clicks);
+            log_message('info', '[' . $this->id . '] [AVISO] Recrute ja executado hoje clicks !' . $r->clicked . '!=' . $clicks);
         }
     }
 
@@ -229,15 +223,15 @@ class Conta extends DataMapperExt {
             $html = $r->is_recrute_done($this, TRUE, $cod);
             // Check if recrute is done
             if ($html === TRUE) {
-                $this->save_log('[' . $this->id . '] [Fim] Recrute');
+                log_message('info', '[' . $this->id . '] [Fim] Recrute');
                 $this->save_recrut_clicks(375);
                 return TRUE;
             } elseif (strpos($html, 'You have clicked too quickly, please wait')) {
-                $this->save_log('[' . $this->id . '] [run] Recrute too quickly clicks:' . $clicks);
+                log_message('info', '[' . $this->id . '] [run] Recrute too quickly clicks:' . $clicks);
             } else {
                 $cod = procurar('</script><a href="/recruiter/recruit/', $html, '" id="recruit_link"');
                 $clicks = trim(procurar('<h4 class="strong">', $html, '/ 375 clicked today'));
-                $this->save_log('[' . $this->id . '] [run] Recrute clicks:' . $clicks);
+                log_message('info', '[' . $this->id . '] [run] Recrute clicks:' . $clicks);
                 $this->save_recrut_clicks($clicks);
                 sleep(1);
             }
@@ -419,7 +413,7 @@ class Conta extends DataMapperExt {
             foreach ($htmlInimigos as $k => $linha) {
                 $lvl = procurar('-->', $linha, '</td>', 5);
                 if (!empty($lvl) && $pag != 0 && ($lvl > $this->attlvlmax || $lvl < $this->attlvlmin)) {
-                    //$this->save_log('lvl: '.$lvl.'<br />'.'attlvlmax: '.$this->attlvlmax.'<br />'.'attlvlmin: '.$this->attlvlmin.'<br />');
+                    //log_message('info', 'lvl: '.$lvl.'<br />'.'attlvlmax: '.$this->attlvlmax.'<br />'.'attlvlmin: '.$this->attlvlmin.'<br />');
                     return true;
                 }
                 $rank = procurar('<!--', $linha, '-->');

@@ -10,6 +10,7 @@ class Site extends Base_Controller {
 
     function Site() {
         parent::__construct();
+        log_message('info', '================= '.$this->ctrlr_name.'->'$this->class_name.' ========================');
         if ($this->session->userdata('logged_dt')) {
             $c = new Conta();
             $c->where('id', $this->session->userdata('logged_dt'));
@@ -41,10 +42,6 @@ class Site extends Base_Controller {
         $this->config->load('config');
 
         $this->data['js_files'][] = 'powerdt.js';
-    }
-
-    function phpinfo() {
-        echo 'ok';
     }
 
     function testelogin() {
