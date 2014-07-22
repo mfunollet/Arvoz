@@ -8,12 +8,12 @@ class Bomnegocio {
         $this->CI = & get_instance();
         $this->terms_list['tipo'] = 'type';
         $this->terms_list['novo/usado'] = 'state';
-        $this->terms_list['tipo'] = 'type';
         $this->terms_list['município'] = 'city';
         $this->terms_list['bairro'] = 'district';
         $this->terms_list['cep'] = 'zip_code';
         $this->terms_list['categoria'] = 'category';
         $this->terms_list['modelo'] = 'model';
+        $this->terms_list['acessório'] = 'accessory';
 
         //parent::__construct();
     }
@@ -48,18 +48,13 @@ class Bomnegocio {
         //return array_merge($links, $this->search($q, $next_link));
     }
 
-<<<<<<< HEAD
-    public function read_product($products = '') {
-        if( is_string($products) ){
-            $products = array($products);
-=======
+
     public function read_product($_products = '') {
         if( is_string($_products) ){
             $products[0] = new stdClass();
             $products[0]->url = $_products;
         }else{
             $products = $_products;
->>>>>>> origin/master
         }
         /*$data[0]['url'] = 'http://rj.bomnegocio.com/rio-de-janeiro-e-regiao/audio-tv-video-e-fotografia/docking-station-sony-rdp-m7ip-iphone-4-4s-ipod-36314008';
         $data[0]['url'] = 'http://rj.bomnegocio.com/rio-de-janeiro-e-regiao/celulares/tela-de-iphone-5-preto-trocada-na-hora-centro-35374842';
@@ -67,7 +62,6 @@ class Bomnegocio {
         foreach($products as $k => $p){
             $data[$k]['url'] = $p->url;
             $data[$k]['opcoes']['CURLOPT_REFERER'] = 'http://google.com/';
-<<<<<<< HEAD
         }
         $htmls = $this->CI->curl->get($data);
 
@@ -76,8 +70,6 @@ class Bomnegocio {
             $this->html = str_get_html($html);
 
             // Product was removed?
-
-=======
             //$data[$k]['opcoes']['CURLOPT_FOLLOWLOCATION'] = FALSE;
         }
         $htmls = $this->CI->curl->get($data);
@@ -109,19 +101,16 @@ class Bomnegocio {
             // // Product was removed?
             // if( ! is_null($this->html->find('h4.msg')) ){
             // }
->>>>>>> origin/master
-
 
             $image          = $this->html->find('img.image',0);
             $image          = (!is_null($image)) ? $image->src : '';
             
 
-<<<<<<< HEAD
             $title          = $this->html->find('#ad_title',0)->innertext;
             $title          = utf8_decode(trim(substr($title,0,strpos($title, '<span class="price highlight">')-3)));
 
             $description    = trim($this->html->find('.description',0)->plaintext);
-=======
+
             $title          = $this->html->find('#ad_title',0);
             if(!is_null($title)){
                 $title          = $title->innertext;
@@ -134,7 +123,6 @@ class Bomnegocio {
             $description    = $this->html->find('.description',0);
             $description    = (!is_null($description)) ? trim($description->plaintext):'';
 
->>>>>>> origin/master
             $price          = $this->html->find('.field_price span',0);
             $price          = (is_null($price)) ? 0 :  substr($price->plaintext,2);
             
@@ -159,7 +147,7 @@ class Bomnegocio {
             foreach($this->html->find('div[class=ad_details_section] li.item') as $item) {
                 $term = $item->find('.term',0);
                 if(!is_null($term)){
-                    $term = $term->plaintext;
+                    $term = utf8_decode($term->plaintext);
                     $term = substr($term, 0, -1);
                     $term = strtolower($term);
                     $product[$this->terms_list[$term]] = trim($item->find('.description',0)->plaintext);
@@ -176,7 +164,7 @@ class Bomnegocio {
             }
 
             $product['title']       = utf8_encode($title);
-            $product['image'] = $image;
+            $product['image']       = $image;
             $product['description'] = $description;
             $product['date']        = $date;
             $product['price']       = $price;

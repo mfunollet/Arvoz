@@ -42,6 +42,10 @@ class Api extends CI_Controller {
     //$this->bomnegocio->read_product('http://df.bomnegocio.com/distrito-federal-e-regiao/celulares/bateria-iphone-4-bateria-iphone-4s-129-99-instal-37765807');
   }
 
+  function cron(){
+    
+  }
+
   function search() {
     $p = new Productbomnegocio();
     $p->auto_craw();
@@ -55,30 +59,26 @@ class Api extends CI_Controller {
   function view() {
       $date =  date('Y-m-d H:i:s O', time(strtotime('yesterday')));
       $p = new Productbomnegocio();
-      $p->where('price >', 200);
-<<<<<<< HEAD
-      //$p->like('title', '64');
-      //$p->or_like('description', '64');
-      $p->order_by('date', 'desc');
-=======
-      $p->where('status', 0);
+      // $p->where('price >', 200);
+      // $p->where('status', 0);
+
+      
       //$p->like('title', '64');
       //$p->or_like('description', '64');
       //$p->order_by('date', 'desc');
       $p->order_by('price', 'asc');
->>>>>>> origin/master
+
       //$p->where('date >', $date);
       $p->get();
+      $p->check_last_query();
       //$p->check_last_query();
       $data['products'] = $p;
       $this->load->view('view',$data);
   }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
   function test(){
     $this->bomnegocio->read_product('http://rs.bomnegocio.com/regioes-de-porto-alegre-torres-e-santa-cruz-do-sul/celulares/iphone-5-32gb-otimo-estado-completo-37918286');
-=======
+  }
 
   function map(){
     //$this->bomnegocio->read_product('http://rs.bomnegocio.com/regioes-de-porto-alegre-torres-e-santa-cruz-do-sul/celulares/iphone-5-32gb-otimo-estado-completo-37918286');
@@ -97,9 +97,7 @@ class Api extends CI_Controller {
 
     //view
     $this->load->view('map'/*,$data*/);
->>>>>>> 3d2bbd52d7a040423688908174923c995812cf6f
   }
->>>>>>> origin/master
 
   function ads(){
     $this->bomnegocio->refreshAds();

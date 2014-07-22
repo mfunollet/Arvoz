@@ -1,5 +1,4 @@
 <meta charset="utf-8">
-<<<<<<< HEAD
 Resultados: <?php echo $products->result_count();?> produtos
 <br />
 <table>
@@ -35,7 +34,6 @@ Resultados: <?php echo $products->result_count();?> produtos
 		</td>
 <?php endforeach;?>
 </table>
-=======
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="<?php echo base_url();?>cjs/isotope/isotope.pkgd.min.js"></script>
 <style>
@@ -68,4 +66,3 @@ $container.isotope({
 	layoutMode: 'fitRows',
 })
 </script>
->>>>>>> origin/master

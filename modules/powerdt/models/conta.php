@@ -20,8 +20,9 @@ class Conta extends DataMapperExt {
     }
 
     function MyDestructor() {
-        echo 'Script executed with success' . PHP_EOL;
-        echo $this->email;
+        log_message('info', utf8_decode('Tempo máximo de execução excedido'));
+        //echo 'Script executed with success' . PHP_EOL;
+        //echo $this->email;
     }
 
     /* 	Retorna nome do cookie usado */
@@ -39,8 +40,10 @@ class Conta extends DataMapperExt {
         if ($this->last_login == NULL) {
             return FALSE;
         }
-        if (!empty($this->id) && (strtotime("now") - strtotime($this->last_login) < $limite) &&
-                $this->CI->curl->is_cookie($this->get_cookie_name())) {
+        if (!empty($this->id) && 
+            (strtotime("now") - strtotime($this->last_login) < $limite) &&
+                $this->CI->curl->is_cookie($this->get_cookie_name())
+            ) {
             return TRUE;
         }
         return false;
@@ -71,13 +74,13 @@ class Conta extends DataMapperExt {
         if (strpos($html, 'Reload the page') || strpos($html, 'Dark Throne Overview')) {
             $this->last_login = date($this->timestamp_format);
             $this->save();
-            debug('!', 'Sucess login: last_login = ' . $this->last_login, $this->debug);
+            log_message('info', utf8_decode('[' . $this->id . '] Logado com sucesso! Último login em '.$this->last_login));
             return TRUE;
         } elseif ($this->was_logout($html, FALSE)) { // Verifica se foi desconectado
-            debug('!', 'was_logout()', $this->debug);
+            log_message('info', '[' . $this->id . '] Foi desconectado!');
             return FALSE;
         }
-        debug('!', 'was_logout() : Dont login', $this->debug);
+        log_message('info', '[' . $this->id . '] Foi desconectado2!');
         return false;
     }
 
@@ -88,6 +91,7 @@ class Conta extends DataMapperExt {
         $this->save();
         $this->CI->curl->delete_cookie($this->get_cookie_name());
         $this->CI->authentication->logout();
+        log_message('info', '[' . $this->id . '] Logout');
     }
 
     /* 	obtem informações da página de overview */
@@ -124,6 +128,7 @@ class Conta extends DataMapperExt {
         $this->dtTime['minutes'] = procurar(':<span class="minutes">', $html, '</span>');
 
         $this->save();
+        log_message('info', '[' . $this->id . '] Overview obtido');
     }
 
     /* 	treinar aldeao */
@@ -146,6 +151,8 @@ class Conta extends DataMapperExt {
         // Varre String
         // TRUE se consegiu fazer a ação
         if (strpos($html, 'successfully trained')) {
+            log_message('info', '[' . $this->id . '] Mineiros treinados:'.$mineiros);
+            log_message('info', '[' . $this->id . '] Soldado offense treinado:'.$mineiros);
             return TRUE;
         }
         return FALSE;
@@ -174,6 +181,7 @@ class Conta extends DataMapperExt {
 
         // TRUE se consegiu fazer a ação
         if (strpos($html, 'A proficiency point has been added. ')) {
+            log_message('info', '[' . $this->id . '] Ponto de offense adicionado:'.$this->prof);
             return TRUE;
         }
         return FALSE;
@@ -181,8 +189,8 @@ class Conta extends DataMapperExt {
 
     function recrutarNoSync($quantidade_loops = 1) {
         for ($i = 1; $i <= $quantidade_loops; $i++) {
-            log_message('info', '[' . $this->id . '] [Inico] RecruteNoSync ' . $i . ' / ' . $quantidade_loops);
-            $this->CI->curl->get_async(site_url('site/recrutar/' . $this->id));
+            log_message('info', '[' . $this->id . '] [Inicio] RecruteNoSync ' . $i . ' / ' . $quantidade_loops);
+            $this->CI->curl->get_async(site_url('site/recrutar/' . $this->id.'/'.$i));
         }
         $this->CI->curl->get_async(site_url('site/recrutarNoSync/' . $quantidade_loops));
     }
@@ -212,7 +220,7 @@ class Conta extends DataMapperExt {
         }
     }
 
-    function recrutar($quantidade = 30) {
+    function recrutar($quantidade = 30, $loop_num = 1) {
         $cod = '';
         $i = 0;
         $html = '';
@@ -223,15 +231,15 @@ class Conta extends DataMapperExt {
             $html = $r->is_recrute_done($this, TRUE, $cod);
             // Check if recrute is done
             if ($html === TRUE) {
-                log_message('info', '[' . $this->id . '] [Fim] Recrute');
+                log_message('info', '[' . $this->id . '] [Loop='.$loop_num.'] Recrute Concluido!');
                 $this->save_recrut_clicks(375);
                 return TRUE;
             } elseif (strpos($html, 'You have clicked too quickly, please wait')) {
-                log_message('info', '[' . $this->id . '] [run] Recrute too quickly clicks:' . $clicks);
+                log_message('info', '[' . $this->id . '] [Loop='.$loop_num.'] ['.$clicks.'/375] Recrute rápido demais');
             } else {
                 $cod = procurar('</script><a href="/recruiter/recruit/', $html, '" id="recruit_link"');
                 $clicks = trim(procurar('<h4 class="strong">', $html, '/ 375 clicked today'));
-                log_message('info', '[' . $this->id . '] [run] Recrute clicks:' . $clicks);
+                log_message('info', '[' . $this->id . '] [Loop='.$loop_num.'] ['.$clicks.'/375] Recrute feito');
                 $this->save_recrut_clicks($clicks);
                 sleep(1);
             }
@@ -253,6 +261,7 @@ class Conta extends DataMapperExt {
 
         // TRUE se consegiu fazer a ação
         if (strpos($html, '???')) {
+            log_message('info', '[' . $this->id . '] Fort consertado');
             return TRUE;
         }
         return FALSE;
@@ -264,7 +273,7 @@ class Conta extends DataMapperExt {
         $data[0]['cookie'] = $this->get_cookie_name();
         $html = $this->CI->curl->get($data);
 
-        $this->dayGold = limparNumero(trim(procurar('<b>Daily Income:</b> ', $html, '</p>')));
+        $this->dyGold = limparNumero(trim(procurar('<b>Daily Income:</b> ', $html, '</p>')));
         $this->workers = limparNumero(trim(procurar('<b>Total Workers:</b> ', $html, '<br />')));
     }
 
@@ -293,7 +302,7 @@ class Conta extends DataMapperExt {
 //		$i = new Inimigo($idDt);
         //$i->gold =
 //		$i->save();
-        echo $html;
+        //echo $html;
         // TRUE se consegiu fazer a ação
         if (strpos($html, 'You just attacked ')) {
             return TRUE;
@@ -470,8 +479,9 @@ class Conta extends DataMapperExt {
     /* 	Depositar dinheiro */
 
     function depositarDinheiro() {
+        $gold = floor(($this->gold * 80) / 100);
         $data[0]['url'] = 'http://www.darkthrone.com/bank/deposit';
-        $data[0]['post']['amount'] = floor(($this->gold * 80) / 100);
+        $data[0]['post']['amount'] = $gold;
         $data[0]['post']['deposit'] = 'deposit';
         $data[0]['post']['deposit.x'] = rand(1, 47);
         $data[0]['post']['deposit.y'] = rand(1, 2);
@@ -481,6 +491,7 @@ class Conta extends DataMapperExt {
 
         // TRUE se consegiu fazer a ação
         if (strpos($html, 'gold has been successfully deposited into your bank account.')) {
+            log_message('info', '[' . $this->id . '] Ouro depositado: '.$gold);
             return TRUE;
         }
         return FALSE;
@@ -514,6 +525,7 @@ class Conta extends DataMapperExt {
         // TRUE se consegiu fazer a ação
         if (strpos($html, 'You have bought')) {
             return TRUE;
+            log_message('info', '[' . $this->id . '] Armory básico comprado');
         }
         return FALSE;
     }
@@ -525,6 +537,7 @@ class Conta extends DataMapperExt {
         $data[0]['opcoes']['CURLOPT_REFERER'] = 'http://www.darkthrone.com/';
         $data[0]['cookie'] = $this->get_cookie_name();
         $this->CI->curl->get($data);
+        log_message('info', '[' . $this->id . '] Mercenarios comprados');
     }
 
     /* Função dos bixos feios */

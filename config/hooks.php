@@ -16,5 +16,14 @@
 //                                'filename' => 'my_permission.php',
 //                                'filepath' => 'hooks'
 //                                );
+
+$hook['post_controller_constructor'] = array(
+    'class' => 'Http_request_logger',
+    'function' => 'log_all',
+    'filename' => 'http_request_logger.php',
+    'filepath' => 'hooks',
+    'params' => array()
+);
+
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */

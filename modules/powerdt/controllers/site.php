@@ -10,7 +10,8 @@ class Site extends Base_Controller {
 
     function Site() {
         parent::__construct();
-        log_message('info', '================= '.$this->ctrlr_name.'->'$this->class_name.' ========================');
+        log_message('info', '================= '.$this->ctrlr_name.'->'.$this->class_name.'->'.$this->action.' ========================');
+        
         if ($this->session->userdata('logged_dt')) {
             $c = new Conta();
             $c->where('id', $this->session->userdata('logged_dt'));
@@ -169,7 +170,7 @@ class Site extends Base_Controller {
 
     function auto($id = NULL) {
         if ($id) {
-            if ($this->logged_dt->id) {
+            if ($this->logged_dt) {
                 $this->logged_dt->logout();
             }
             $c = new Conta();
@@ -285,17 +286,21 @@ class Site extends Base_Controller {
     function recrutarNoSync($quantidade_loops = 10) {
         $r = new Recrut();
         if (!$r->is_recrute_done($this->logged_dt)) {
+            log_message('info', '[' . $this->logged_dt->id . '] Iniciando recrute asincrono');
             $this->logged_dt->recrutarNoSync($quantidade_loops);
+        }else{
+            log_message('info', '[' . $this->logged_dt->id . '] [Inicio] Recrute ja foi feito');
         }
     }
 
-    function recrutar($id = 1, $quantidade = 10) {
+    function recrutar($id = 1, $loop_num = 1) {
+        $quantidade = 10;
         $c = new Conta();
         $c->where('id', $id);
         $c->get();
         $this->logged_dt = $c;
         $this->logged_dt->login();
-        $this->logged_dt->recrutar($quantidade);
+        $this->logged_dt->recrutar($quantidade, $loop_num);
     }
 
     function getInimigosErroControl($id = 1) {
