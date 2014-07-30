@@ -5,3 +5,5 @@ $config['site_title'] = 'PowerDarkThrone';
 $config['app_name'] = 'Power DarkThrone';
 
 $config['max_num_items_on_page'] = '10';
+
+$config['log_path'] = APPPATH . 'modules/bomnegocio/logs/;

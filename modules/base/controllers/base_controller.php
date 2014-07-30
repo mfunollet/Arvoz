@@ -211,7 +211,7 @@ class Base_Controller extends CI_Controller {
 
         $this->data['data']['pagination'] = (!empty($this->data['data']['pagination'])) ? $this->data['data']['pagination'] : '';
 
-        if (isAjax()) {
+        if (isAjax() and !$this->force_noajax_view) {
             $output = $this->load->view($this->layout, $this->data, TRUE);
             $return_arr['content'] = $output;
             $this->_set_json_output($return_arr);

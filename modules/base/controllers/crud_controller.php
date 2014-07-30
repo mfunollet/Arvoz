@@ -60,7 +60,7 @@ abstract class CRUD_Controller extends APP {
     }
 
     function _form($id = NULL) {
-        $this->data['data']['fields'] = $this->element->get_clean_fields();
+        $this->data['data']['fields'] = $this->element->getFields();
         $this->view = (empty($this->view)) ? $this->ctrlr_name . '/' . $this->ctrlr_name . '_form_view' : $this->view;
 
         if ($_POST || $_FILES) {
@@ -86,7 +86,7 @@ abstract class CRUD_Controller extends APP {
             } else {
                 $this->element->trans_commit();
                 $this->msg_ok((empty($this->element->_msg) ? lang('save_success') : $this->element->_msg));
-                if (!isAjax()) {
+                if (!isAjax() and !$this->force_noajax_view) {
                     $redirect = ($this->redirect_url) ? $this->redirect_url : $this->ctrlr_name . '/' . $this->action . '/';
                     redirect($redirect);
                 }
@@ -104,15 +104,15 @@ abstract class CRUD_Controller extends APP {
             redirect($this->ctrlr_name);
         }
 
-        $this->load->library('pagination');
+        // $this->load->library('pagination');
 
-        $confpage['use_page_numbers'] = TRUE;
-        $confpage['total_rows'] = $this->element->paged->total_rows;
-        $confpage['per_page'] = $this->element->paged->page_size;
-        $confpage['base_url'] = site_url($this->ctrlr_name . '/' . $this->action . ((isset($this->viewing_id)) ? '/' . $this->viewing_id : ''));
-        $confpage['uri_segment'] = 4;
+        // $confpage['use_page_numbers'] = TRUE;
+        // $confpage['total_rows'] = $this->element->paged->total_rows;
+        // $confpage['per_page'] = $this->element->paged->page_size;
+        // $confpage['base_url'] = site_url($this->ctrlr_name . '/' . $this->action . ((isset($this->viewing_id)) ? '/' . $this->viewing_id : ''));
+        // $confpage['uri_segment'] = 4;
 
-        $this->pagination->initialize($confpage);
+        // $this->pagination->initialize($confpage);
 
         $this->data['data']['pagination'] = $this->pagination->create_links();
         parent::page();

@@ -4,6 +4,9 @@ include_once(APPPATH . 'modules/base/controllers/crud_controller.php');
 
 class Crawlers extends CRUD_Controller {
 
+  // var $force_noajax = TRUE;
+  // var $force_noajax_view = TRUE;
+
   function Crawlers() {
     parent::__construct();
   }
