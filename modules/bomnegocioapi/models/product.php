@@ -1,21 +1,20 @@
 <?php
 
-class ProductBomNegocio extends DataMapperExt {
+class Product extends DataMapperExt {
 
-    var $table = 'products_bomnegocio';
+    var $table = 'crawler_product';
     
+    public $has_one = array(
+        'crawler' => array(
+            'class' => 'crawler',
+        )
+    );
+
+    var $html;
+
     function __construct($id = NULL) {
         //register_shutdown_function(array(&$this, 'MyDestructor'));
         parent::__construct($id);
-
-        $this->terms_list['tipo'] = 'type';
-        $this->terms_list['novo/usado'] = 'state';
-        $this->terms_list['município'] = 'city';
-        $this->terms_list['bairro'] = 'district';
-        $this->terms_list['cep'] = 'zip_code';
-        $this->terms_list['categoria'] = 'category';
-        $this->terms_list['modelo'] = 'model';
-        $this->terms_list[utf8_decode('acessório')] = 'accessory';
     }
 
     function MyDestructor() {
@@ -23,15 +22,37 @@ class ProductBomNegocio extends DataMapperExt {
         echo $this->email;
     }
 
-    public function auto_craw(){
-        $craws = new Crawler();
-        $craws->get();
-        foreach($craws as $c){
-            log_message('info', 'Keyword obtida= '.$c->keyword);
-            $keys[] = $c->keyword;
+
+    public function refreshAds(){
+        $data[0]['url'] = 'http://www.bomnegocio.com/sold_ads_new_images.json?_=1403180725887';
+        $json = $this->CI->curl->get($data);
+        $data = json_decode($json);
+        foreach($data->images as $img){
+            $imgs[] = $img->url;
         }
-        $this->craw_by_keywords($keys);
     }
+
+    public function get_urls_from_a_search($q = '', $url = ''){
+        log_message('info', 'searching for keyword: '.$data[0]['url']);
+
+        
+
+       /* $next_link = $this->_next_page();
+        
+        if(is_null($next_link)){
+            return $links;
+        }*/
+
+        return $links;
+        
+    }
+
+
+
+
+
+
+
 
     public function craw_products() {
         $this->where('url IS NOT NULL');
@@ -78,7 +99,7 @@ class ProductBomNegocio extends DataMapperExt {
         foreach ($htmls as $k => $html) {
             if(empty($html)){
                 // se encontrar a mensagem "O anúncio não foi encontrado. Possíveis razões:" troca para vendido e pula
-                $p = new ProductBomNegocio();
+                $p = new Product();
                 $p->where('url', $data[$k]['url']);
                 $p->get();
                 if($p->exists()){
@@ -140,6 +161,9 @@ class ProductBomNegocio extends DataMapperExt {
             
             $code           = $this->html->find('ul[class=list list_id last] p.description',0)->plaintext;
 
+            // Get terms translations from config
+            $terms_list = $this->CI->config->item('terms_list');
+
             // Details from product
             foreach($this->html->find('div[class=ad_details_section] li.item') as $item) {
                 $term = $item->find('.term',0);
@@ -147,7 +171,7 @@ class ProductBomNegocio extends DataMapperExt {
                     $term = utf8_decode($term->plaintext);
                     $term = substr($term, 0, -1);
                     $term = strtolower($term);
-                    $product[$this->terms_list[$term]] = trim($item->find('.description',0)->plaintext);
+                    $product[$terms_list[$term]] = trim($item->find('.description',0)->plaintext);
                 }
             }
 
@@ -157,7 +181,7 @@ class ProductBomNegocio extends DataMapperExt {
                 $term = substr($term, 0, -1);
                 $term = strtolower($term);
                 //$term = str_replace('í', 'i', $term);
-                $product[$this->terms_list[$term]] = trim($item->find('.description',0)->plaintext);
+                $product[$terms_list[$term]] = trim($item->find('.description',0)->plaintext);
             }
 
             $product['title']       = utf8_encode($title);
@@ -180,7 +204,7 @@ class ProductBomNegocio extends DataMapperExt {
 
 
             // Save product
-            $p = new ProductBomNegocio();
+            $p = new Product();
             $p->where('url', $data[$k]['url']);
             $p->get();
             foreach($product as $field => $value){
@@ -189,23 +213,6 @@ class ProductBomNegocio extends DataMapperExt {
             log_message('info', 'saving product: '.$p->code);
             $p->save();
         }
-    }
-
-    public function craw_by_keywords($keywords = array()) {
-        foreach ($keywords as $key) {
-            $links = $this->CI->bomnegocio->search($key);
-            foreach ($links as $link) {
-                $p = new ProductBomNegocio();
-                $p->where('url', $link);
-                $p->get();
-                if(!$p->exists()){
-                    $p->searched_keyword = $key;
-                    $p->url = $link;
-                    $p->save();
-                }
-            }
-        }
-
     }
 
 }

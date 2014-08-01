@@ -12,7 +12,7 @@ class Api extends CI_Controller {
     log_message('info', 'HELLO API BOM NEGOCIO');
     echo anchor('crawlers', 'CRUD Crawlers');
     echo '<br>';
-    echo anchor('api/search', 'Buscar anuncios');
+    echo anchor('crawlers/obteranuncios', 'Obter anuncios');
     echo '<br>';
     echo anchor('api/crawproducts', 'Buscar informações dos anuncios');
     echo '<br>';
@@ -48,13 +48,6 @@ class Api extends CI_Controller {
     $p = new Productbomnegocio();
     $p->craw_products();
   }
-
-  function search() {
-    log_message('info', 'Buscando informacoes de anuncios');
-    $p = new Productbomnegocio();
-    $p->auto_craw();
-  }
-
 
   function view() {
       $date =  date('Y-m-d H:i:s O', time(strtotime('yesterday')));

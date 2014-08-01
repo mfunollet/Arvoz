@@ -11,10 +11,10 @@ class Http_request_logger {
      //    	log_message('info', 'Reserva');
      //    	exit;
     	// }
-        $this->CI = & get_instance();
-        log_message('info', 'GET --> ' . var_export($this->CI->input->get(null), true));
-        log_message('info', 'POST --> ' . var_export($this->CI->input->post(null), true));                
-        log_message('info', '$_SERVER -->' . var_export($_SERVER, true));
+        // $this->CI = & get_instance();
+        // log_message('info', 'GET --> ' . var_export($this->CI->input->get(null), true));
+        // log_message('info', 'POST --> ' . var_export($this->CI->input->post(null), true));                
+        // log_message('info', '$_SERVER -->' . var_export($_SERVER, true));
     }
 
 }

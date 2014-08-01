@@ -4,8 +4,8 @@ include_once(APPPATH . 'modules/base/controllers/crud_controller.php');
 
 class Crawlers extends CRUD_Controller {
 
-  // var $force_noajax = TRUE;
-  // var $force_noajax_view = TRUE;
+  var $force_noajax = FALSE;
+  var $force_noajax_view = FALSE;
 
   function Crawlers() {
     parent::__construct();
@@ -22,5 +22,12 @@ class Crawlers extends CRUD_Controller {
   function delete($id){
   	parent::delete($id);
   }
+
+  function obteranuncios() {
+    $this->element->get();
+
+    $this->element->obteranuncios();
+  }
+
 
 }
