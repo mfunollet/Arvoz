@@ -25,8 +25,8 @@ class Api extends CI_Controller {
     echo anchor('api/map', 'map');
     echo '<br>';
   }
-
-  function json(){
+http://ba.bomnegocio.com/sul-da-bahia/animais-e-acessorios/cachorros/yorkshire
+  function get_products(){
     $p = new Productbomnegocio();
     $p->where('lat !=', 0);
     $p->where('lon !=', 0);

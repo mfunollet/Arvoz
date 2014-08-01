@@ -12,11 +12,11 @@ class Crawlers extends CRUD_Controller {
   }
 
   function index(){
-  	parent::index();
+    parent::index();
   }
 
   function create(){
-  	parent::create();
+    parent::create();
   }
 
   function delete($id){

@@ -14,7 +14,11 @@ Class Crawler extends DataMapperExt {
     public $validation = array(
         'keyword' => array(
             'rules' => array('required', 'trim', 'unique')
-        )/*,
+        ),
+        'region' => array(
+            'rules' => array('trim')
+        ),
+        /*,
         'url' => array(
             'rules' => array('required', 'trim', 'prep_url')
         )*/
