@@ -4,6 +4,7 @@ include_once(APPPATH . 'models/datamapperex.php');
 Class Crawler extends DataMapperExt {
 
     var $table = 'crawler';
+    var $links = array();
 
     public $has_many = array(
         'product' => array(
@@ -37,20 +38,22 @@ Class Crawler extends DataMapperExt {
     }
 
     public function obtemPaginaDeAnuncios($url){
+        log_message('info', 'Rastreando: '.$url);
+        log_message('info', 'Usando: '.convert(memory_get_usage(true)) );
         $links = array();
+
         // Prepara o request curl
         $data[0]['url'] = $url;
         $data[0]['opcoes']['CURLOPT_REFERER'] = 'http://google.com/';
         $html = $this->CI->curl->get($data);
         $this->html = str_get_html($html);
-
+        $i = 0;
         // Obtem links do resultado da busca
-        foreach($this->html->find('ul.list_adsBN') as $ul){
-            foreach ($ul->find('li.list_adsBN_item') as $li) {
-                // Obtem link da linha
-                $link = $li->find('a',1);
-                $link = (!is_null($link)) ? $link->href : '';
-            }
+        foreach ($this->html->find('li.list_adsBN_item') as $li) {
+            // Obtem link da linha
+            $link = $li->find('a',1);
+            $link = ( !is_null($link) ) ? $link->href : '';
+            $links[] = $link;
         }
 
         // Verifica se existe mais paginas
@@ -58,17 +61,23 @@ Class Crawler extends DataMapperExt {
 
         // Se houver link para proxima página executa chamada recursiva
         if($next_link != NULL){
+            unset($html);
+            unset($this->html);
             log_message('info', 'Rastreando proxima pagina');
             return array_merge($links, $this->obtemPaginaDeAnuncios($next_link));
         }
-        log_message('info', 'Rastreamento completo');
         return $links;
+        log_message('info', 'FIM?');
+//        return $links;
     }
 
     public function obteranuncios(){
         foreach($this->all as $c){
             log_message('info', 'Obtendo urls da busca = '.$c->keyword);
-            $this->obtemPaginaDeAnuncios('http://www.bomnegocio.com/brasil?ot=1&ott=1&q='.urlencode($c->keyword));
+            $a = $this->obtemPaginaDeAnuncios('http://www.bomnegocio.com/brasil?ot=1&ott=1&q='.urlencode($c->keyword));
+            //print_r($a);
+            log_message('info', 'Usando fim: '.convert(memory_get_usage(true)) );
+            exit;
     
             // Verifica se o link ja está indexado
             $p = new Product();

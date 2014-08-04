@@ -3,7 +3,7 @@
 include_once(APPPATH . 'modules/base/controllers/crud_controller.php');
 
 class Crawlers extends CRUD_Controller {
-
+// http://ba.bomnegocio.com/sul-da-bahia/animais-e-acessorios/cachorros/yorkshire
   var $force_noajax = FALSE;
   var $force_noajax_view = FALSE;
 
