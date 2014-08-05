@@ -19,6 +19,10 @@ class DataMapperExt extends DataMapper {
         $this->getModuleStatus();
     }
 
+    function tester($function_name){
+      return $this->{$function_name}();
+    }
+
     //FIX: NUNCA MAIS MEXE!
    function get_clean_fields() {
        if (empty($this->filtered_fields)) {

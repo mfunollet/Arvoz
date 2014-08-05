@@ -24,8 +24,14 @@ class Crawlers extends CRUD_Controller {
   }
 
   function obteranuncios() {
+    $this->benchmark->mark('code_start');
     $this->element->get();
-
+    $this->element->getSearchResults();
+    $this->element->extractLinks();
+    print_r($this->links);
+    $this->benchmark->mark('code_end');
+    echo $this->benchmark->elapsed_time('code_start', 'code_end');
+    exit;
     $this->element->obteranuncios();
   }
 

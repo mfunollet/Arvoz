@@ -105,7 +105,7 @@ class Base_Controller extends CI_Controller {
         $this->data['css_files'] = array();
 
         //Load the default css files
-        $this->data['css_files'][] = 'jquery-ui/jquery-ui-1.8.18.custom.css';
+        //$this->data['css_files'][] = 'jquery-ui/jquery-ui-1.8.18.custom.css';
         $this->data['css_files'][] = 'bootstrap/css/bootstrap.css';
         $this->data['css_files'][] = 'bootstrap/css/bootstrap-responsive.css';
         $this->data['css_files'][] = 'dialog2/css/jquery.dialog2.css';

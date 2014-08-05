@@ -6,6 +6,10 @@ Class Crawler extends DataMapperExt {
     var $table = 'crawler';
     var $links = array();
 
+    var $html = array();
+    var $_cur_page = 1;
+    var $_last_page = 1;
+
     public $has_many = array(
         'product' => array(
             'class' => 'product',
@@ -95,6 +99,76 @@ Class Crawler extends DataMapperExt {
         }
 
     }
+
+
+
+    function getSearchResults(){ // A
+        $i=0;
+        $this->html = array();
+        while ($this->_cur_page <= $this->_last_page) {
+            // Prepara url
+            $url = 'http://www.bomnegocio.com/brasil?ot=1&ott=1&q='.urlencode($this->keyword).'&o='.$this->_cur_page;
+            log_message('info', 'Rastreando pag '.$this->_cur_page.'/'.$this->_last_page.'  '.$url);
+
+            // Prepara o request curl
+            $data[$i]['url'] = $url;
+            $data[$i]['opcoes']['CURLOPT_REFERER'] = 'http://google.com/';
+            $i++;
+            $this->_cur_page++;
+        }
+
+        $htmls = $this->CI->curl->get($data);
+        
+        if(!is_array($htmls)){
+            $htmls = array($htmls);
+        }
+
+        foreach ($htmls as $html) {
+            $this->html[] = str_get_html($html);
+        }
+    }
+
+    function extractLinks(){ // B
+        // Obtem links do resultado da busca
+        log_message('info', 'Extraindo links de '.count($this->html). ' buscas');
+        foreach ($this->html as $html) {
+            foreach ($html->find('li.list_adsBN_item') as $li) {
+                // Obtem link da linha
+                $link = $li->find('a',1);
+                $link = ( !is_null($link) ) ? $link->href : '';
+                $this->links[] = $link;
+            }
+        }
+
+        // Verifica se existe mais paginas
+        $_last_page = $this->_last_page();
+
+        $page_str = '['.$this->_cur_page.'/'.$this->_last_page.'] ';
+
+        // Se houver mais 
+        if($_last_page > 0){
+            log_message('info', $page_str.'Obtendo buscas em lote');
+            $this->getSearchResults();
+            $this->extractLinks(); 
+            return;
+        }
+        log_message('info', $page_str.'Busca concluida');
+        log_message('info', 'Memory usage: '.convert(memory_get_usage(true)) );
+    }
+
+    function _last_page(){
+        $_last_page = 0;
+        end($this->html); 
+        $html = $this->html[key($this->html)];
+        $link = $html->find('li[class=item last] a',0);
+        if( ! is_null($link)){
+            $_last_page = intval(procurar('o=', $link->href, '&'));
+        }
+        log_message('info', 'Last page:'.$_last_page);
+        $this->_last_page = $_last_page;
+        return $_last_page;
+    }
+
     
     // function _saveExtra($id = NULL) {
     //     $rel = NULL;
