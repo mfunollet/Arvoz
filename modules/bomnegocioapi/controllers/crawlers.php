@@ -23,16 +23,22 @@ class Crawlers extends CRUD_Controller {
   	parent::delete($id);
   }
 
-  function obteranuncios() {
-    $this->benchmark->mark('code_start');
+  function getproducts() {
     $this->element->get();
     $this->element->getSearchResults();
     $this->element->extractLinks();
-    print_r($this->links);
-    $this->benchmark->mark('code_end');
-    echo $this->benchmark->elapsed_time('code_start', 'code_end');
-    exit;
-    $this->element->obteranuncios();
+    $this->element->saveProducts();
+  }
+
+  function getproductsdetails() {
+    $this->element->where_related_product('url IS NOT NULL');
+    // $this->element->where('url IS NOT NULL');
+    // update_time < 10 min
+    // where related products are NOT with status = 1, because it has already sould out
+    $this->element->get();
+    $this->element->product->get(5);
+    $this->element->crawProductsDetails();
+    $this->element->saveProductsDetails();
   }
 
 

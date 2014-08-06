@@ -12,9 +12,9 @@ class Api extends CI_Controller {
     log_message('info', 'HELLO API BOM NEGOCIO');
     echo anchor('crawlers', 'CRUD Crawlers');
     echo '<br>';
-    echo anchor('crawlers/obteranuncios', 'Obter anuncios');
+    echo anchor('crawlers/getproducts', 'Obter produtos');
     echo '<br>';
-    echo anchor('api/crawproducts', 'Buscar informações dos anuncios');
+    echo anchor('crawlers/getproductsdetails', 'Obter detalhes de produtos');
     echo '<br>';
     echo anchor('api/apiGetProducts', 'apiGetProducts');
     echo '<br>';
@@ -41,12 +41,6 @@ class Api extends CI_Controller {
 
   function teste(){
     //$this->bomnegocio->read_product('http://df.bomnegocio.com/distrito-federal-e-regiao/celulares/bateria-iphone-4-bateria-iphone-4s-129-99-instal-37765807');
-  }
-
-  function crawproducts() {
-    log_message('info', 'Buscando anuncios');
-    $p = new Productbomnegocio();
-    $p->craw_products();
   }
 
   function view() {
