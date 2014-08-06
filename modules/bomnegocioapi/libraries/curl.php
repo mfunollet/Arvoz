@@ -108,6 +108,7 @@ class Curl {
         // informar URL e outras fun��es ao CURL
         curl_setopt($curly, CURLOPT_URL, $data['url']);
         curl_setopt($curly, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.4) Gecko/20030624 Netscape/7.1 (ax)");
+        //curl_setopt($curly, CURLOPT_HEADER, FALSE);
         curl_setopt($curly, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($curly, CURLOPT_FOLLOWLOCATION, FALSE);
 
@@ -143,17 +144,29 @@ class Curl {
                 $curly[$id] = $this->request($req);
                 curl_multi_add_handle($ch, $curly[$id]);
             }
+
             // Executar os handles
             $running = null;
             do {
                 curl_multi_exec($ch, $running);
             } while ($running > 0);
+            //    $mrc = curl_multi_exec($ch, $running);
+            //} while ($mrc == CURLM_CALL_MULTI_PERFORM);
+
+            /*while ($running && $mrc == CURLM_OK) {
+                if (curl_multi_select($ch) != -1) {
+                    do {
+                        $mrc = curl_multi_exec($ch, $running    );
+                    } while ($mrc == CURLM_CALL_MULTI_PERFORM);
+                }
+            }*/
 
             // Pegar o conteudo e remover os handles
             foreach ($data as $id => $req) {
                 $html[$id] = curl_multi_getcontent($curly[$id]);
                 curl_multi_remove_handle($ch, $curly[$id]);
             }
+
             curl_multi_close($ch);
         } else {
             // Procura a chave no array
