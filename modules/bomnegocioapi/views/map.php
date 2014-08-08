@@ -88,7 +88,7 @@
 			  infoWindow: {
 			    content: '<p>'+
 			    			'<h1>'+item.title+'</h1>'+
-			    			'<img src="'+item.image+'" class="image" />'+
+			    			//'<img src="'+item.image+'" class="image" />'+
 			    			item.description+
 			    		'</p>'
 			  }/*,

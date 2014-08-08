@@ -109,7 +109,7 @@ Class Crawler extends DataMapperExt {
         $this->html = array();
         while ($this->_cur_page <= $this->_last_page) {
             // Prepara url
-            $url = 'http://www.bomnegocio.com/brasil?ot=1&ott=1&q='.urlencode($this->keyword).'&o='.$this->_cur_page;
+            $url = 'http://www.bomnegocio.com/brasil?q='.urlencode($this->keyword).'&o='.$this->_cur_page;
 
             // Prepara o request curl
             $data[$i]['url'] = $url;
@@ -117,6 +117,7 @@ Class Crawler extends DataMapperExt {
             $i++;
             $this->_cur_page++;
         }
+        //var_dump($data);
 
         log_message('info', 'Rastreando total de: '.$i.' paginas');
         $this->CI->benchmark->mark('code_start');
@@ -132,6 +133,7 @@ Class Crawler extends DataMapperExt {
         }
 
         foreach ($htmls as $html) {
+            //var_dump($html);
             $this->html[] = str_get_html($html);
         }
     }
@@ -147,9 +149,9 @@ Class Crawler extends DataMapperExt {
                 $this->links[] = $link;
             }
         }
-
         // Verifica se existe mais paginas
         $_last_page = $this->_last_page();
+        log_message('info', 'paginas='.$_last_page);
 
         $page_str = '['.$this->_cur_page.'/'.$this->_last_page.'] ';
 
@@ -168,6 +170,7 @@ Class Crawler extends DataMapperExt {
         end($this->html); 
         $html = $this->html[key($this->html)];
         $link = $html->find('li[class=item last] a',0);
+        //var_dump($link);
         if( ! is_null($link)){
             $_last_page = intval(procurar('o=', $link->href, '&'));
         }
