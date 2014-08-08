@@ -202,7 +202,7 @@ Class Crawler extends DataMapperExt {
 
 
 
-    ## Craw Products begin ##
+    ## Craw Products Details begin ##
 
     function crawProductsDetails() {
         // Get terms translations from config
@@ -389,7 +389,7 @@ Class Crawler extends DataMapperExt {
     }
 
 
-    ## Craw Products end ##
+    ## Craw Products Details end ##
 
     
     // function _saveExtra($id = NULL) {
