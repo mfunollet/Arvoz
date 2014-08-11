@@ -10,7 +10,6 @@ class Site extends Base_Controller {
 
     function Site() {
         parent::__construct();
-        log_message('info', '================= '.$this->ctrlr_name.'->'.$this->class_name.'->'.$this->action.' ========================');
         
         if ($this->session->userdata('logged_dt')) {
             $c = new Conta();
