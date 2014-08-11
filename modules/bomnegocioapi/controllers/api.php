@@ -1,15 +1,14 @@
 <?php
 
-//include_once(APPPATH . 'modules/base/controllers/base_controller.php');
+include_once(APPPATH . 'modules/base/controllers/base_controller.php');
 
-class Api extends CI_Controller {
+class Api extends Base_Controller {
 
   function Api() {
     parent::__construct();
   }
 
   function index() {
-    log_message('info', 'HELLO API BOM NEGOCIO');
     echo anchor('crawlers', 'CRUD Crawlers');
     echo '<br>';
     echo anchor('crawlers/getproducts', 'Obter produtos');

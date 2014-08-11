@@ -143,8 +143,8 @@ class Base_Controller extends CI_Controller {
         } else {
             $this->output->set_content_type('application/json');
         }
-        log_message('info', 'Uri:<'.$this->uri->uri_string().'> rUri:<'.$this->uri->ruri_string()
-                '>  Controller:<'.$this->ctrlr_name.'>  Class:<'.$this->class_name.'>  Action<'.$this->action.'>  ');
+        log_message('info', 'Uri:<'.$this->uri->uri_string().'> rUri:<'.$this->uri->ruri_string().'>'.
+                '  Controller:<'.$this->ctrlr_name.'>  Class:<'.$this->class_name.'>  Action<'.$this->action.'>  ');
     }
 
     function _load_use_as_companies() {
