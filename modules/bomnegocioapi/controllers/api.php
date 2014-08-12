@@ -13,7 +13,7 @@ class Api extends Base_Controller {
     echo '<br>';
     echo anchor('crawlers/getproducts', 'Obter produtos');
     echo '<br>';
-    echo anchor('crawlers/getproductsdetails', 'Obter detalhes de produtos');
+    echo anchor('products/getproductsdetails', 'Obter detalhes de produtos');
     echo '<br>';
     echo anchor('api/apiGetProducts', 'apiGetProducts');
     echo '<br>';
