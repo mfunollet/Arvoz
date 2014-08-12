@@ -143,10 +143,16 @@ class Base_Controller extends CI_Controller {
         } else {
             $this->output->set_content_type('application/json');
         }
+
         if($this->config->item('enable_hooks')){
-            log_message('info', 'Uri:<'.$this->uri->uri_string().'> rUri:<'.$this->uri->ruri_string().'>'.
-                    '  Controller:<'.$this->ctrlr_name.'>  Class:<'.$this->class_name.'>  Action<'.$this->action.'>  ');
+            $log = 'Uri='.$this->uri->uri_string().'  ';
+            $log .= 'rUri='.$this->uri->ruri_string().'  ';
+            $log .= 'Controller='.$this->ctrlr_name.'  ';
+            $log .= 'Class='.$this->class_name.'  ';
+            $log .= 'Action='.$this->action.'  ';
+            log_message('info', $log);
         }
+
     }
 
     function _load_use_as_companies() {

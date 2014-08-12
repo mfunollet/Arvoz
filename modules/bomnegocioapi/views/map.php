@@ -20,7 +20,16 @@
         	alert(data[i].title)
         	*/
       //var markers_data = [];
-		$.each( data, function( i, item ) {
+      	//var places = $.parseJSON(data.responseText);
+      	alert(JSON.stringify(data.responseText));
+      	//alert(places[0].title)
+      	//alert(JSON.stringify(places));
+
+      	//places = jQuery.parseJSON(places)
+      	
+		$.each( places, function( i, item ) {
+   		//alert(JSON.stringify(item.title));
+			
 
         //if (item.location.lat != undefined && item.location.lng != undefined) {
         //     var icon = 'https://foursquare.com/img/categories/food/default.png';
@@ -89,21 +98,20 @@
 			    content: '<p>'+
 			    			'<h1>'+item.title+'</h1>'+
 			    			//'<img src="'+item.image+'" class="image" />'+
-			    			item.description+
+			    			//item.description+
 			    		'</p>'
-			  }/*,
-			  icon : {
-			    size : new google.maps.Size(32, 32),
-			    url : item.image
-			  }*/
+				  }/*,
+				  icon : {
+				    size : new google.maps.Size(32, 32),
+				    url : item.image
+				  }*/
 			});
 
 	        //   }
-    	map.addMarkers(markers_data);
-		});
+    		map.addMarkers(markers_data);
+			});
       //   }
       // }
-      //alert(JSON.stringify(markers_data));
       
 
       //map.addMarkers(markers_data);
@@ -112,13 +120,14 @@
 $(document).ready(function(){
 	map = new GMaps({
 		div: '#map',
-		 lat: -12.043333,
-		 lng: -77.028333
+		 lat: -23.1769,
+		 lng: -45.8865
 	});
 
 	var xhr = $.getJSON('<?php echo base_url();?>api/json');
 
-	xhr.done(loadResults);
+	xhr.always(loadResults);
+	//xhr.done(loadResults);
 
 
 
