@@ -29,12 +29,20 @@ class Api extends Base_Controller {
     $p = new Product();
     $p->where('lat !=', 0);
     $p->where('lon !=', 0);
-    $p->get();
+    $p->get(2);
     //$p->check_last_query();exit;
     //$p->set_json_content_type();
-
+    header("HTTP/1.1 200 OK");
     header('Content-Type: application/json');
-    echo $p->all_to_json();
+    $fields = array('title','lon','lat');
+    echo $p->all_to_json($fields);
+    // http://powerdt.in/api/json
+    // http://jsonlint.com/
+
+    // $array[0]['title'] = $p->title;
+    // $array[0]['lat'] = $p->lat;
+    // $array[0]['lon'] = $p->lon;
+    // echo json_encode($array);
     // http://stackoverflow.com/questions/15954174/code-igniter-with-data-mapper-giving-in-valid-json
   }
 

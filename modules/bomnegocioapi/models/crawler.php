@@ -251,8 +251,8 @@ Class Crawler extends DataMapperExt {
                 continue;
             }
             $this->products_details[] =  $this->extractProductsDetails(str_get_html($html), $data[$k]['url']);
-            log_message('info', 'Memory usage: '.convert(memory_get_usage(true)) );
         }
+        log_message('info', 'Memory usage: '.convert(memory_get_usage(true)) );
     }
 
     function extractProductsDetails($html, $url) {
@@ -363,7 +363,7 @@ Class Crawler extends DataMapperExt {
             $product['lon'] = $loc['lon'];                
         }
 
-        log_message('info', 'Dados extraidos com sucesso do produto code='.$product['code']);
+        //log_message('info', 'Dados extraidos com sucesso do produto code='.$product['code']);
 
         return $product;
     }
