@@ -375,6 +375,7 @@ Class Crawler extends DataMapperExt {
         foreach($this->products_details as $product){
             $p = new Product();
             $p->where('url', $product['url']);
+            $p->get();
             foreach($product as $field => $value){
                 if(empty($field)) {
                     log_message('info', 'empty -> '. $field);
