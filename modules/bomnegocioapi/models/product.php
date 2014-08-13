@@ -200,7 +200,7 @@ class Product extends DataMapperExt {
 
     function saveProductsDetails(){
         $this->CI->benchmark->mark('code_start');
-        log_message('info', '['.$this->keyword.'] Salvando detalhes dos produtos do banco');
+        log_message('info', '['.$this->crawler->keyword.'] Salvando detalhes dos produtos do banco');
 
         foreach($this as $k => $p) {
             if($p->exists()){

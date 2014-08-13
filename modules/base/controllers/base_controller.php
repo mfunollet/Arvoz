@@ -231,7 +231,7 @@ class Base_Controller extends CI_Controller {
     }
 
     function _output($output) {
-        if (isAjax())
+        if (isAjax() and !isset($this->no_ajax))
             echo json_encode($this->json_output);
         else
             echo $output;

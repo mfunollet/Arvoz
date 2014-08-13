@@ -26,16 +26,18 @@ class Api extends Base_Controller {
   }
 
   function json(){
+    $this->no_ajax = TRUE;
     $p = new Product();
     $p->where('lat !=', 0);
     $p->where('lon !=', 0);
-    $p->get(2);
+    $p->get();
     //$p->check_last_query();exit;
     //$p->set_json_content_type();
     header("HTTP/1.1 200 OK");
     //header('Content-Type: application/json');
     $fields = array('title','lon','lat');
     echo $p->all_to_json($fields);
+    
     //echo json_encode($p->to_array($fields));
 
     // echo '[';

@@ -10,44 +10,31 @@
 	var map;
    function loadResults (data) {
    	 var markers_data = [];
-  //  	alert(data.items.length);
-		//	alert(i+': '+item.title);
-      //alert(JSON.stringify(data));
-      //alert(data.)
-      /*if (data.length > 0) {
-        for (var i = 0; i < data.length; i++) {
-        	//var item = data.;
-        	alert(data[i].title)
-        	*/
-      //var markers_data = [];
-      	//var places = $.parseJSON(data.responseText);
-      	alert(data.responseText);
-      	//alert(places[0].title)
-      	//alert(JSON.stringify(places));
-
-      	//places = jQuery.parseJSON(places)
+      	//alert(JSON.stringify(data));
+      	//jQuery.parseJSON(data)
       	
-		$.each( places, function( i, item ) {
-   		//alert(JSON.stringify(item.title));
-			
+		$.each( data, function( i, item ) {
+			markers_data.push({
+			  lat : item.lat,
+			  lng : item.lon,
+			  title : item.title,
+			  infoWindow: {
+			    content: '<p>'+
+			    			'<h1>'+item.title+'</h1>'+
+			    			//'<img src="'+item.image+'" class="image" />'+
+			    			//item.description+
+			    		'</p>'
+				  }/*,
+				  icon : {
+				    size : new google.maps.Size(32, 32),
+				    url : item.image
+				  }*/
+			});
+			map.addMarkers(markers_data);
+		});
 
         //if (item.location.lat != undefined && item.location.lng != undefined) {
         //     var icon = 'https://foursquare.com/img/categories/food/default.png';
-        //     if (item.categories.length > 0) {
-        //       icon = item.categories[0].icon;
-        //     }
-
-	  //       addr = '';
-	  //       if(item.zip_code != ''){
-	  //       	addr = item.zip_code+' - ';
-			// }
-			// if(item.district != ''){
-	  //       	addr = addr+item.district+' - ';
-			// }
-			// if(item.city != ''){
-	  //       	addr = addr+item.city;
-			// }
-			
 			// GMaps.geocode({
 			//   address: addr,
 			//   callback: function(results, status) {
@@ -88,33 +75,6 @@
 			//     }
 			//   }
 			// });
-
-
-			markers_data.push({
-			  lat : item.lat,
-			  lng : item.lon,
-			  title : item.title,
-			  infoWindow: {
-			    content: '<p>'+
-			    			'<h1>'+item.title+'</h1>'+
-			    			//'<img src="'+item.image+'" class="image" />'+
-			    			//item.description+
-			    		'</p>'
-				  }/*,
-				  icon : {
-				    size : new google.maps.Size(32, 32),
-				    url : item.image
-				  }*/
-			});
-
-	        //   }
-    		map.addMarkers(markers_data);
-			});
-      //   }
-      // }
-      
-
-      //map.addMarkers(markers_data);
     }
 
 $(document).ready(function(){
@@ -123,17 +83,7 @@ $(document).ready(function(){
 		 lat: -23.1769,
 		 lng: -45.8865
 	});
-
 	var xhr = $.getJSON("<?php echo base_url();?>api/json");
-// $.ajax({
-//     url: '<?php echo base_url();?>api/json',
-//     dataType: 'jsonp',
-//     success: loadResults,
-//     error: function( data ) {
-//       alert( "ERROR:  " + JSON.stringify(data) );
-//     }
-//   });
-
 	//xhr.always(loadResults);
 	xhr.done(loadResults);
 	xhr.error(function(jqXHR, textStatus, errorThrown) { alert("error " + textStatus+' response.status '+jqXHR.status + ' errorThrown '+errorThrown); })
