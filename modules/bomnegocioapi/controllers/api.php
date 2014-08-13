@@ -33,9 +33,17 @@ class Api extends Base_Controller {
     //$p->check_last_query();exit;
     //$p->set_json_content_type();
     header("HTTP/1.1 200 OK");
-    header('Content-Type: application/json');
+    //header('Content-Type: application/json');
     $fields = array('title','lon','lat');
     echo $p->all_to_json($fields);
+    //echo json_encode($p->to_array($fields));
+
+    // echo '[';
+
+    // foreach($p as $pr){
+    //   echo json_encode($pr->to_array);
+    // }
+    // echo ']';
     // http://powerdt.in/api/json
     // http://jsonlint.com/
 

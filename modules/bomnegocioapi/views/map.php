@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
   <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=true"></script>
 <script src="<?php echo base_url();?>cjs/jquery/gmaps.js"></script>
@@ -21,7 +21,7 @@
         	*/
       //var markers_data = [];
       	//var places = $.parseJSON(data.responseText);
-      	alert(JSON.stringify(data.responseText));
+      	alert(data.responseText);
       	//alert(places[0].title)
       	//alert(JSON.stringify(places));
 
@@ -124,10 +124,19 @@ $(document).ready(function(){
 		 lng: -45.8865
 	});
 
-	var xhr = $.getJSON('<?php echo base_url();?>api/json');
+	var xhr = $.getJSON("<?php echo base_url();?>api/json");
+// $.ajax({
+//     url: '<?php echo base_url();?>api/json',
+//     dataType: 'jsonp',
+//     success: loadResults,
+//     error: function( data ) {
+//       alert( "ERROR:  " + JSON.stringify(data) );
+//     }
+//   });
 
-	xhr.always(loadResults);
-	//xhr.done(loadResults);
+	//xhr.always(loadResults);
+	xhr.done(loadResults);
+	xhr.error(function(jqXHR, textStatus, errorThrown) { alert("error " + textStatus+' response.status '+jqXHR.status + ' errorThrown '+errorThrown); })
 
 
 

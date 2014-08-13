@@ -29,8 +29,8 @@ class Products extends CRUD_Controller {
     // 2014-08-06 16:07:19
     // now - 30 min
     //$this->element->where('update_time < ',$date);
-    $this->element->where('id',1);
-    $this->element->or_where('id',2);
+    //$this->element->where('id',1);
+    //$this->element->or_where('id',2);
     // $this->element->where('url IS NOT NULL');
     // update_time < 10 min
     // where related products are NOT with status = 1, because it has already sould out

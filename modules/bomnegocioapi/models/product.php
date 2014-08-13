@@ -50,7 +50,7 @@ class Product extends DataMapperExt {
             $i++;
         }
 
-        log_message('info', 'Carregando '.$i.' do bomnegocio');
+        log_message('info', '['.$this->crawler->keyword.'] Carregando '.$i.' do bomnegocio');
         $this->CI->benchmark->mark('code_start');
         
         $htmls = $this->CI->curl->get($data);
@@ -63,14 +63,14 @@ class Product extends DataMapperExt {
         log_message('info', 'Levou '.$time.'segs para acessar '.$i.' produtos');
 
 
-        log_message('info', '['.$this->keyword.'] Obtidos '.count($htmls).' detalhes de produtos.');
+        log_message('info', 'Obtidos '.count($htmls).' detalhes de produtos.');
 
         foreach($this as $k => $p) {
+            $html = $htmls[$k];
             if(!isset($html[$k])){
                 log_message('info', 'Request Error:#'.$k);
                 continue;
             }
-            $html = $htmls[$k];
             if(empty($html) OR (strpos($html, "O anúncio não foi encontrado. Possíveis razões:")) ){
                 // Se encontrar esta mensagem, troca para vendido e pula
                 if($p->exists()){
@@ -200,31 +200,28 @@ class Product extends DataMapperExt {
 
     function saveProductsDetails(){
         $this->CI->benchmark->mark('code_start');
-        $i=0;
-        log_message('info', '['.$this->keyword.'] Salvando detalhes dos produtos');
-        foreach($this->products_details as $product){
-            $p = new Product();
-            $p->where('url', $product['url']);
-            $p->get();
-            foreach($product as $field => $value){
-                if(empty($field)) {
-                    log_message('info', 'empty -> '. $field);
-                }else{
-                    $p->{$field} = $value;
+        log_message('info', '['.$this->keyword.'] Salvando detalhes dos produtos do banco');
+
+        foreach($this as $k => $p) {
+            if($p->exists()){
+                foreach($this->products_details[$k] as $field => $value){
+                    if(empty($field)) {
+                        log_message('info', 'empty -> '. $field);
+                    }else{
+                        $p->{$field} = $value;
+                    }
+                    $p->save();
                 }
             }
-            $p->save($this);
-            $i++;
         }
+
         $this->CI->benchmark->mark('code_end');
         $time = $this->CI->benchmark->elapsed_time('code_start', 'code_end');
 
-        log_message('info', '['.$this->keyword.'] Detalhes dos produtos salvos. Total de '.$i.'. Em '.$time.' segs');
+        log_message('info', 'Detalhes dos produtos salvos. Total de '.$k.'. Em '.$time.' segs');
     }
 
-
     ## Craw Products Details end ##
-
 
 }
 
