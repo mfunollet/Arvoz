@@ -17,8 +17,8 @@
 			markers_data.push({
 			  lat : item.lat,
 			  lng : item.lon,
-			  title : item.title,
-			  infoWindow: {
+			  title : item.title//,
+			  /*infoWindow: {
 			    content: '<p>'+
 			    			'<h1>'+item.title+'</h1>'+
 			    			//'<img src="'+item.image+'" class="image" />'+
@@ -32,6 +32,7 @@
 			});
 			map.addMarkers(markers_data);
 		});
+		map.fitZoom();
 
         //if (item.location.lat != undefined && item.location.lng != undefined) {
         //     var icon = 'https://foursquare.com/img/categories/food/default.png';
@@ -117,7 +118,9 @@ $(document).ready(function(){
 		});
 
 	});*/
-
+    $window.on('resize', function(){
+      set_map_height();
+    })
 });
 </script>
 

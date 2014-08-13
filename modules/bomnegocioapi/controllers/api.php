@@ -30,6 +30,7 @@ class Api extends Base_Controller {
     $p = new Product();
     $p->where('lat !=', 0);
     $p->where('lon !=', 0);
+    $p->where('status IS NULL');
     $p->get();
     //$p->check_last_query();exit;
     //$p->set_json_content_type();
@@ -100,7 +101,7 @@ class Api extends Base_Controller {
     $data['sidebar']   = "";             
 
     //view
-    $this->load->view('map',$data);
+    $this->load->view('map2',$data);
   }
 
   function ads(){
