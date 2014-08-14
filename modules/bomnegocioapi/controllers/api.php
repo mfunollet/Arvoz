@@ -36,7 +36,7 @@ class Api extends Base_Controller {
     //$p->set_json_content_type();
     header("HTTP/1.1 200 OK");
     //header('Content-Type: application/json');
-    $fields = array('title','lon','lat', 'images', 'price', 'description');
+    $fields = array('title', 'url','lon','lat', 'images', 'price', 'description');
     echo $p->all_to_json($fields);
     
     //echo json_encode($p->to_array($fields));
