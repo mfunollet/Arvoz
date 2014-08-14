@@ -14,11 +14,11 @@
             xhr.done(loadResults);
             xhr.error(function(jqXHR, textStatus, errorThrown) { alert("error " + textStatus+' response.status '+jqXHR.status + ' errorThrown '+errorThrown); })
 
-            function loadResults() {
+            function loadResults(data) {
                 // map options
                 var options = {
                     zoom: 5,
-                    center: new google.maps.LatLng(39.909736, -98.522109), // centered US
+                    //center: new google.maps.LatLng(39.909736, -98.522109), // centered US
                     mapTypeId: google.maps.MapTypeId.TERRAIN,
                     mapTypeControl: false
                 };
@@ -27,38 +27,50 @@
                 var map = new google.maps.Map(document.getElementById('map_canvas'), options);
 
                 // NY and CA sample Lat / Lng
-                var southWest = new google.maps.LatLng(40.744656, -74.005966);
-                var northEast = new google.maps.LatLng(34.052234, -118.243685);
-                var lngSpan = northEast.lng() - southWest.lng();
-                var latSpan = northEast.lat() - southWest.lat();
+                // var southWest = new google.maps.LatLng(40.744656, -74.005966);
+                // var northEast = new google.maps.LatLng(34.052234, -118.243685);
+                // var lngSpan = northEast.lng() - southWest.lng();
+                // var latSpan = northEast.lat() - southWest.lat();
+                
+                var bounds = new google.maps.LatLngBounds();
 
                 // set multiple marker
-                for (var i = 0; i < 250; i++) {
+                $.each( data, function( i, item ) {
+                //for (var i = 0; i < 250; i++) {
                     // init markers
                     var marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(10, southWest.lng() + lngSpan * Math.random()),
+                        position: new google.maps.LatLng(item.lat, item.lon),
                         map: map,
-                        title: 'Click Me ' + i
+                        title: item.title
                     });
+                    bounds.extend(new google.maps.LatLng(item.lat, item.lon));
 
                     // process multiple info windows
                     (function(marker, i) {
+                        item.image = jQuery.parseJSON(item.images)[0];
                         // add click event
                         google.maps.event.addListener(marker, 'click', function() {
                             infowindow = new google.maps.InfoWindow({
-                                content: 'Hello, World!!'
+                                content: item.title+'<br /><img src="'+item.image+'" class="image" />'
                             });
                             infowindow.open(map, marker);
                         });
                     })(marker, i);
-                }
+                });
+                map.fitBounds(bounds);
             }
         });
         </script>
+        <style type="text/css">
+        .image{
+            width: 100px;
+            height: 100px;
+        }
+        </style>
     </head>
     <body>
-        <div id="map_canvas" style="width: 800px; height:500px;"></div>
+        <div id="map_canvas" style="width: 1300px; height: 900px;"></div>
     </body>
-    example from: http://stackoverflow.com/questions/3059044/google-maps-js-api-v3-simple-multiple-marker-example
-    http://you.arenot.me/2010/06/29/google-maps-api-v3-0-multiple-markers-multiple-infowindows/
+    <!-- example from: http://stackoverflow.com/questions/3059044/google-maps-js-api-v3-simple-multiple-marker-example
+    http://you.arenot.me/2010/06/29/google-maps-api-v3-0-multiple-markers-multiple-infowindows/ -->
 </html>
