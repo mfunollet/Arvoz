@@ -63,6 +63,9 @@ class Base_Controller extends CI_Controller {
     protected $menu = array();
     protected $json_output = array();
 
+    // Turn TRUE to force an ajax request be handdle as a normal request
+    protected $force_noajax_view = FALSE;
+
     /**
      * The construct of Base_controller
      *
@@ -231,7 +234,7 @@ class Base_Controller extends CI_Controller {
     }
 
     function _output($output) {
-        if (isAjax() and !isset($this->no_ajax))
+        if (isAjax() and !isset($this->force_noajax_view))
             echo json_encode($this->json_output);
         else
             echo $output;

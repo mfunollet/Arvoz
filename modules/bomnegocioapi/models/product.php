@@ -117,7 +117,7 @@ class Product extends DataMapperExt {
 
         ## Preço
         $price          = $html->find('.field_price span',0);
-        $price          = (!is_null($price)) ? trim(substr($price->plaintext,2)) : 0;
+        $price          = (!is_null($price)) ? trim(str_replace(".","", substr($price->plaintext,2))) : 0;
         
         ## Data do anúncio
         $date           = $html->find('div[class=adBN_header mb10px] p.text',0);

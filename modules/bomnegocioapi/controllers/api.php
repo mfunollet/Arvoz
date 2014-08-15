@@ -26,8 +26,19 @@ class Api extends Base_Controller {
   }
 
   function json(){
-    $this->no_ajax = TRUE;
+    // Define filters
+    $filters = array();
+    if($this->input->get('min_price')){
+        $filters['price >'] = $this->input->get('min_price');
+    }
+    if($this->input->get('max_price')){
+      $filters['price <'] = $this->input->get('max_price');
+    }
+
+    $this->force_noajax_view = TRUE;
     $p = new Product();
+    $p->select('id, lat, lon');
+    $p->where($filters);
     $p->where('lat !=', 0);
     $p->where('lon !=', 0);
     $p->where('status IS NULL');
@@ -35,8 +46,9 @@ class Api extends Base_Controller {
     //$p->check_last_query();exit;
     //$p->set_json_content_type();
     header("HTTP/1.1 200 OK");
-    //header('Content-Type: application/json');
-    $fields = array('title', 'url','lon','lat', 'images', 'price', 'description');
+    header('Content-Type: application/json');
+
+    $fields = array('id', 'lat', 'lon');
     echo $p->all_to_json($fields);
     
     //echo json_encode($p->to_array($fields));
@@ -55,6 +67,11 @@ class Api extends Base_Controller {
     // $array[0]['lon'] = $p->lon;
     // echo json_encode($array);
     // http://stackoverflow.com/questions/15954174/code-igniter-with-data-mapper-giving-in-valid-json
+  }
+
+  function iframe($id = NULL){
+    //$this->force_noajax_view = TRUE;
+    parent::page();
   }
 
   function teste(){
