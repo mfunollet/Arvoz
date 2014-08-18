@@ -37,7 +37,7 @@ class Api extends Base_Controller {
 
     $this->force_noajax_view = TRUE;
     $p = new Product();
-    $p->select('id, lat, lon');
+    $p->select('id, lat, lon', 'url');
     $p->where($filters);
     $p->where('lat !=', 0);
     $p->where('lon !=', 0);
@@ -48,7 +48,7 @@ class Api extends Base_Controller {
     header("HTTP/1.1 200 OK");
     header('Content-Type: application/json');
 
-    $fields = array('id', 'lat', 'lon');
+    $fields = array('id', 'lat', 'lon', 'url');
     echo $p->all_to_json($fields);
     
     //echo json_encode($p->to_array($fields));
@@ -71,7 +71,21 @@ class Api extends Base_Controller {
 
   function iframe($id = NULL){
     //$this->force_noajax_view = TRUE;
+    $p = new Product();
+    $p->where('id', $id);
+    $p->get(1);
+    $p->images = json_decode($p->images);
+    $this->data['p'] = $p;
     parent::page();
+  }
+
+  function red($id = NULL){
+    //$this->force_noajax_view = TRUE;
+    $p = new Product();
+    $p->select('url');
+    $p->where('id', $id);
+    $p->get(1);
+    redirect($p->url);
   }
 
   function teste(){
@@ -105,20 +119,25 @@ class Api extends Base_Controller {
   function map(){
     //$this->bomnegocio->read_product('http://rs.bomnegocio.com/regioes-de-porto-alegre-torres-e-santa-cruz-do-sul/celulares/iphone-5-32gb-otimo-estado-completo-37918286');
     //CONTROLLER:
+    $this->data['js_files'][] = 'https://maps.googleapis.com/maps/api/js?v=3.11&sensor=false';
+    // $this->data['js_files'][] = 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js';
+    // $this->data['css_files'][] = 'bootstrap/css/bootstrap.css';
+
     $this->load->library('Gmap');
     $this->gmap->GoogleMapAPI();
     $this->gmap->setMapType('hybrid');    
     $this->gmap->width = '740px';    
     //$this->gmap->addMarkerByAddress("42 Beanland Gardens, Wibsey, Bradford,UK","Marker Title", "Marker Description");
     $this->gmap->getGeocode("Rua dos invalidos, 138","Teste", "Teste Description");
-    $data['headerjs']  = $this->gmap->getHeaderJS();
-    $data['headermap'] = $this->gmap->getMapJS();
-    $data['onload']    = $this->gmap->printOnLoad();
-    $data['map']       = $this->gmap->printMap();
-    $data['sidebar']   = "";             
+    $this->data['headerjs']  = $this->gmap->getHeaderJS();
+    $this->data['headermap'] = $this->gmap->getMapJS();
+    $this->data['onload']    = $this->gmap->printOnLoad();
+    $this->data['map']       = $this->gmap->printMap();
+    $this->data['sidebar']   = "";             
 
     //view
-    $this->load->view('map2',$data);
+    //$this->load->view('map2',$data);
+    parent::page();
   }
 
   function ads(){

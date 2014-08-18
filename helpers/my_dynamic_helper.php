@@ -8,7 +8,11 @@
 function a2_javascript($js_files) {
 
     foreach ($js_files as $js) {
-        echo '<script src="' . base_url() . 'cjs/' . $js . '" type="text/javascript"></script>';
+    	if(substr($js, 0, 3) == 'htt'){
+	        echo '<script src="' . $js . '" type="text/javascript"></script>';
+    	}else{
+        	echo '<script src="' . base_url() . 'cjs/' . $js . '" type="text/javascript"></script>';
+    	}
     }
 }
 
