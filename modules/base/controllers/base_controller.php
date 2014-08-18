@@ -109,12 +109,14 @@ class Base_Controller extends CI_Controller {
 
         //Load the default css files
         //$this->data['css_files'][] = 'jquery-ui/jquery-ui-1.8.18.custom.css';
-        $this->data['css_files'][] = 'bootstrap/css/bootstrap.css';
-        $this->data['css_files'][] = 'bootstrap/css/bootstrap-responsive.css';
+        //$this->data['css_files'][] = 'bootstrap/css/bootstrap.css';
+        //$this->data['css_files'][] = 'bootstrap/css/bootstrap-responsive.css';
+        $this->data['css_files'][] = '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css';
         $this->data['css_files'][] = 'dialog2/css/jquery.dialog2.css';
 
         //Load the default javascript files
-        $this->data['js_files'][] = 'bootstrap/js/bootstrap.js';
+        //$this->data['js_files'][] = 'bootstrap/js/bootstrap.js';
+        $this->data['js_files'][] = '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js';
         $this->data['js_files'][] = 'ajax-form/jquery.form.js';
         $this->data['js_files'][] = 'dialog2/js/jquery.dialog2.js';
         $this->data['js_files'][] = 'dialog2/js/jquery.dialog2.helpers.js';

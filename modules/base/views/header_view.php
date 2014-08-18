@@ -26,6 +26,6 @@
     <body>
         <?php $this->load->view('base/includes/top_bar_view', $data); ?>
 
-        <div class="container-fluid">
+        <div class="container">
             <?php $this->load->view('base/includes/messages_view', $data); ?>
-            <div class="row-fluid">
+            <div class="row">

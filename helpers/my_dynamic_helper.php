@@ -8,11 +8,11 @@
 function a2_javascript($js_files) {
 
     foreach ($js_files as $js) {
-    	if(substr($js, 0, 3) == 'htt'){
-	        echo '<script src="' . $js . '" type="text/javascript"></script>';
-    	}else{
-        	echo '<script src="' . base_url() . 'cjs/' . $js . '" type="text/javascript"></script>';
-    	}
+        if(substr($js, 0, 3) == 'htt' || substr($js, 0, 2) == '//'){
+            echo '<script src="' . $js . '" type="text/javascript"></script>';
+        }else{
+            echo '<script src="' . base_url() . 'cjs/' . $js . '" type="text/javascript"></script>';
+        }
     }
 }
 
@@ -24,6 +24,10 @@ function a2_javascript($js_files) {
 function a2_css($css_files) {
 
     foreach ($css_files as $css) {
-        echo link_tag('cjs/' . $css);
+        if(substr($css, 0, 3) == 'htt' || substr($css, 0, 2) == '//'){
+            echo '<link href="'.$css.'" rel="stylesheet" type="text/css" />';
+        }else{
+            echo link_tag('cjs/' . $css);
+        }
     }
 }

@@ -56,12 +56,14 @@
             }
 
             function clearOverlays() {
-              for (var i = 0; i < markersArray.length; i++ ) {
-                markersArray[i].setMap(null);
-              }
-              markersArray.length = 0;
-              get_data();
+                event.preventDefault();
+                for (var i = 0; i < markersArray.length; i++ ) {
+                    markersArray[i].setMap(null);
+                }
+                markersArray.length = 0;
+                get_data();
             }
+            
             $("#update").click(clearOverlays);
 
             function loadResults(data) {
@@ -92,15 +94,20 @@
                         markersArray.push(marker);
                         //google.maps.event.addListener($("#update"),"click",clearOverlays);
 
+                        // google.maps.event.addListener(marker, 'click', function() {
+                        //       var win = window.open(redirect_url+item.id, '_blank');
+                        //       win.focus();
+                        // });
+
+                        // google.maps.event.addListener(marker, 'mouseout', function() {
+                        //     infowindow.close(map, marker);
+                        // });
+
                         google.maps.event.addListener(marker, 'click', function() {
-                              var win = window.open(redirect_url+item.id, '_blank');
-                              win.focus();
-                        });
-                        google.maps.event.addListener(marker, 'mouseout', function() {
-                            infowindow.close(map, marker);
-                        });
-                        google.maps.event.addListener(marker, 'mouseover', function() {
-                            infowindow = new google.maps.InfoWindow();
+                            infowindow = new google.maps.InfoWindow({
+                                                    content: '',
+                                                    maxWidth: 200
+                                                });
                               $.ajax({
                                     url: iframe_url+item.id,
                                     dataType: 'json',
@@ -113,6 +120,9 @@
                                             // '<b>R$ '+item.price+'</b><br />'+
                                             // images_str+item.description
                                         //});
+                                            if($('.gm-style-iw').length) {
+                                                $('.gm-style-iw').parent().remove();
+                                            }
                                           infowindow.open(map, marker);
                                     }
                             });
@@ -147,15 +157,38 @@
                 height: 100px;
                 float: left;
             }
+            .gm-style-iw img {
+                max-width: 100px;
+                float: left;
+            }
+            .gm-style-iw {
+                width: 400px; 
+                max-height: 300px;
+                min-height: 300px;
+            }
+           /* form {
+                height: 150px;
+                margin-bottom: 50px;
+            }*/
         </style>
 <br />
 <br />
 <br />
-        <div id="last-update"></div>
-        <button id="update">update</button>
-        <form>
-            Preço mínimo: <input name="min_price" />
-            Preço máximo: <input name="max_price" />
+        <form class="form-horizontal">
+            <div class="input-group">
+                <span class="input-group-addon">Preço mínimo</span>
+                <input type="text" class="form-control" name="min_price" placeholder="R$ 00,00">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">Preço máximo</span>
+                <input type="text" class="form-control" name="max_price" placeholder="R$ 100,00">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <div id="last-update"></div>
+                </span>
+                <button id="update" class="btn btn-primary">Update Now!</button>
+            </div>
             <!-- <select name="single">
                 <option>Single</option>
                 <option>Single2</option>
@@ -177,7 +210,7 @@
             <input type="radio" name="radio" value="radio2" id="r2">
             <label for="r2">radio2</label> -->
         </form>
-        <div id="map_canvas" style="width: 1000px; height: 1000px;"></div>
+        <div id="map_canvas" style="width: 100%; height: 750px;"></div>
 
     <!-- example from: http://stackoverflow.com/questions/3059044/google-maps-js-api-v3-simple-multiple-marker-example
     http://you.arenot.me/2010/06/29/google-maps-api-v3-0-multiple-markers-multiple-infowindows/ -->

@@ -1,7 +1,7 @@
-<div class="navbar navbar-fixed-top" >
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <a href="<?php echo site_url() ?>" class="brand">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="container">
+            <a href="<?php echo site_url() ?>" class="navbar-brand">
                 <?php 
                     echo img('images/app_tag.png', FALSE, array(
                             'alt' => $this->config->item('app_name'),
@@ -17,4 +17,4 @@
             </div>
         </div>
     </div>
-</div>
+</nav>
