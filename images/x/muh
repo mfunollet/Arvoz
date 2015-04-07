@@ -1,0 +1,48 @@
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+uucp:x:10:14:uucp:/var/spool/uucp:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+gopher:x:13:30:gopher:/var/gopher:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+vcsa:x:69:69:virtual console memory owner:/dev:/sbin/nologin
+saslauth:x:499:76:"Saslauthd user":/var/empty/saslauth:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+named:x:25:25:Named:/var/named:/sbin/nologin
+mysql:x:498:498:MySQL server:/var/lib/mysql:/bin/bash
+cpanelhorde:x:500:500::/var/cpanel/userhomes/cpanelhorde:/usr/local/cpanel/bin/noshell
+mailnull:x:47:47:Exim:/var/spool/mqueue:/bin/false
+dovecot:x:97:97:Dovecot IMAP server:/usr/libexec/dovecot:/sbin/nologin
+dovenull:x:497:497:Dovecot's unauthorized user:/usr/libexec/dovecot:/sbin/nologin
+cpanel:x:32001:502::/var/cpanel/userhomes/cpanel:/usr/local/cpanel/bin/noshell
+cpanelphpmyadmin:x:32002:503::/var/cpanel/userhomes/cpanelphpmyadmin:/usr/local/cpanel/bin/noshell
+cpanelphppgadmin:x:32003:504::/var/cpanel/userhomes/cpanelphppgadmin:/usr/local/cpanel/bin/noshell
+cpanelroundcube:x:32004:505::/var/cpanel/userhomes/cpanelroundcube:/usr/local/cpanel/bin/noshell
+mailman:x:32005:506::/usr/local/cpanel/3rdparty/mailman/mailman:/usr/local/cpanel/bin/noshell
+cpanellogin:x:32007:509::/var/cpanel/userhomes/cpanellogin:/usr/local/cpanel/bin/noshell
+cpaneleximfilter:x:32008:510::/var/cpanel/userhomes/cpaneleximfilter:/usr/local/cpanel/bin/noshell
+cpaneleximscanner:x:32009:511::/var/cpanel/userhomes/cpaneleximscanner:/usr/local/cpanel/bin/noshell
+cpses:x:496:496::/var/cpanel/cpses:/sbin/nologin
+fotoscombr:x:501:512::/home/fotoscombr:/bin/bash
+powerdt:x:502:513::/home/powerdt:/usr/local/cpanel/bin/noshell
+uncherstorecombr:x:503:514::/home/uncherstorecombr:/bin/bash
+negocioagoranoip:x:505:516::/home/negocioagoranoip:/usr/local/cpanel/bin/noshell
+srtaperegrinecom:x:507:518::/home/srtaperegrinecom:/bin/bash
+jogarmc:x:508:519::/home/jogarmc:/bin/bash
+puppet:x:52:52:Puppet:/var/lib/puppet:/sbin/nologin
+nagios:x:495:494::/var/spool/nagios:/sbin/nologin
+nrpe:x:494:493:NRPE user for the NRPE service:/var/run/nrpe:/sbin/nologin
+thomasgrochcom:x:509:520::/home/thomasgrochcom:/bin/bash
+teamspeak3-user:x:32010:32010::/home/teamspeak3-user:/bin/bash
+cpanelrrdtool:x:32011:32011::/var/cpanel/userhomes/cpanelrrdtool:/usr/local/cpanel/bin/noshell
+tshirtidealcom:x:510:521::/home/tshirtidealcom:/bin/bash
+olhonofococom:x:511:522::/home/olhonofococom:/bin/bash

@@ -103,12 +103,21 @@ Class Crawler extends DataMapperExt {
 
     ## Craw Products begin ##
 
+    function getUrl(){
+        if(!empty($this->region) ){
+            $url = $this->region.'?q='.urlencode($this->keyword).'&o='.$this->_cur_page;
+        }else{
+            $url = 'http://www.bomnegocio.com/brasil?q='.urlencode($this->keyword).'&o='.$this->_cur_page;
+        }
+        return $url;
+    }
+
     function getSearchResults(){ // A
         $i=0;
         $this->html = array();
         while ($this->_cur_page <= $this->_last_page) {
             // Prepara url
-            $url = 'http://www.bomnegocio.com/brasil?q='.urlencode($this->keyword).'&o='.$this->_cur_page;
+            $url = $this->getUrl();
 
             // Prepara o request curl
             $data[$i]['url'] = $url;

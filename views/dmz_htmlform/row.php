@@ -52,7 +52,7 @@
 
 ?>
 	<div class="control-group<?php echo $row_class; ?>"<?php echo $row_id; ?>>
-		<label class="control-label"<?php echo $label_for; ?>><?php echo $label; ?>:</label>
+		<label <?php echo $label_for; ?>><?php echo $label; ?>:</label>
 		<div class="controls">
 		<?php echo $content; ?>
 		<?php /*

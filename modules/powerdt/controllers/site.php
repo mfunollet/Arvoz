@@ -7,6 +7,7 @@ class Site extends Base_Controller {
 // Alface 3,11,19
 // Violeta 4,12,20
     var $logged_dt;
+    public $layout = 'base/simple_layout';
 
     function Site() {
         parent::__construct();
@@ -38,7 +39,7 @@ class Site extends Base_Controller {
 
         $this->_add_menu('left', 'dashboard');
 
-        $this->layout = 'powerdt_layout';
+        //$this->layout = 'powerdt_layout';
         $this->config->load('config');
 
         $this->data['js_files'][] = 'powerdt.js';

@@ -65,7 +65,8 @@ function mark_ajax_modal() {
             $.get(href, function(data) {
                 var m = $('#myModal');
                 m.modal();
-                m.html(data.content);
+                //m.html(data.content);
+                m.find('#modal-body').html(data.content);
                 
                 var af = m.find('form');
                 af.submit(show_response); 

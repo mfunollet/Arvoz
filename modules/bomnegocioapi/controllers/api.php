@@ -145,7 +145,7 @@ class Api extends Base_Controller {
   }
 
   function apiGetProducts() {
-    $products = new Productbomnegocio();
+    $products = new Product();
     $products->get();
     header('Content-Type: application/json');
     foreach($products as $p){

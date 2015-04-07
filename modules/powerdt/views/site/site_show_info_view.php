@@ -49,6 +49,9 @@
         Fort: <?php echo $logged_dt->fort; ?>%
     </div>
 </div>
+<?php 
+echo floor(($logged_dt->exp * 100);
+echo ' >> '.($logged_dt->nextleveexp + $logged_dt->exp));?>
 <?php $exp_porcento = floor(($logged_dt->exp * 100) / ($logged_dt->nextleveexp + $logged_dt->exp)); ?>
 <div class="progress progress-<?php echo get_color($exp_porcento, TRUE);?>">
     <div class="bar" style="width: <?php echo $exp_porcento; ?>%">
