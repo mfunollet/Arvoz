@@ -94,7 +94,7 @@ class Api extends Base_Controller {
 
   function view() {
       $date =  date('Y-m-d H:i:s O', time(strtotime('yesterday')));
-      $p = new Productbomnegocio();
+      $p = new Product();
       // $p->where('price >', 200);
       // $p->where('status', 0);
 
